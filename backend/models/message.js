@@ -6,6 +6,7 @@ const messageSchema = new Schema(
 		consumer: { type: Schema.Types.ObjectId, ref: "Consumer" },
 		// 0 - farmer -> consumer, 1 - consumer -> farmer
 		from: { type: Number, default: 0 },
+		messgae: { type: String, default: "" },
 	},
 	{
 		timestamps: true,
