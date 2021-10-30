@@ -40,6 +40,7 @@ import {
 
 // core components
 import { chartOptions, parseOptions, chartExample1, chartExample2, chartExample3, chartExample4 } from "variables/charts.js";
+import { Alert } from "reactstrap";
 
 import Header from "components/Headers/Header.js";
 
@@ -139,7 +140,7 @@ const Index = (props) => {
 		// TODO: Error checking for if IP address is not available 
 		const ip = await axios.get('https://geolocation-db.com/json/')
 		const res = await axios.get(
-			`http://api.weatherapi.com/v1/forecast.json?key=${process.env.REACT_APP_API_KEY}&q=${ip.data.IPv4}&days=4`
+			`http://api.weatherapi.com/v1/forecast.json?key=${process.env.REACT_APP_API_KEY}&q=${ip.data.IPv4}&days=4&alerts=yes`
 		);
 		return res;
 	};
@@ -467,6 +468,9 @@ const Index = (props) => {
 					</Col>
 				</Row>
 			</Container>
+			<Alert color="danger">
+				<strong>Danger!</strong> This is a danger alert—check it out!
+			</Alert>
 		</>
 	);
 };
