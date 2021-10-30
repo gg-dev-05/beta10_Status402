@@ -7,6 +7,9 @@ import AuthLayout from "layouts/Auth";
 import axios from "axios";
 import { BASE_URL } from "Common/Constants";
 
+import "react-notifications-component/dist/theme.css";
+import ReactNotification from "react-notifications-component";
+
 function App() {
 	const [r, setR] = useState(false);
 	const [userType, setUserType] = useState("guest");
@@ -23,6 +26,7 @@ function App() {
 
 	return (
 		<BrowserRouter>
+			<ReactNotification />
 			<Switch>
 				{userType === "farmer" && (
 					<>

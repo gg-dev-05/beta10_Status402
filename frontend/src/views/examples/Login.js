@@ -34,6 +34,7 @@ import {
 } from "reactstrap";
 import { BASE_URL } from "../../Common/Constants";
 import axios from "axios";
+import { badNotification, goodNotification } from "Common/Notification";
 
 const Login = ({ refresh }) => {
 	const [username, setUsername] = useState("");
@@ -55,8 +56,9 @@ const Login = ({ refresh }) => {
 		if (res.data.statusCode == 200) {
 			localStorage.setItem("token", res.data.token);
 			refresh();
+			goodNotification("Success", "Signed in successfully");
 		} else {
-			// cannot add user
+			badNotification("Username or password is incorrect");
 		}
 	};
 
@@ -89,6 +91,7 @@ const Login = ({ refresh }) => {
 											setUsername(e.target.value);
 										}}
 										value={username}
+										required
 									/>
 								</InputGroup>
 							</FormGroup>
@@ -106,6 +109,7 @@ const Login = ({ refresh }) => {
 											setPassword(e.target.value);
 										}}
 										value={password}
+										required
 									/>
 								</InputGroup>
 							</FormGroup>
@@ -119,9 +123,9 @@ const Login = ({ refresh }) => {
 				</Card>
 				<Row className="mt-3">
 					<Col xs="6">
-						<a className="text-light" href="#pablo" onClick={(e) => e.preventDefault()}>
+						{/*<a className="text-light" href="#pablo" onClick={(e) => e.preventDefault()}>
 							<small>Forgot password?</small>
-						</a>
+									</a>*/}
 					</Col>
 					<Col className="text-right" xs="6">
 						<a className="text-light" href="#pablo" onClick={(e) => e.preventDefault()}>

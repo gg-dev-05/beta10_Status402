@@ -38,6 +38,7 @@ import "../../assets/css/register.css";
 import { BASE_URL } from "../../Common/Constants";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { goodNotification, badNotification } from "Common/Notification";
 
 const Register = () => {
 	let history = useHistory();
@@ -57,8 +58,10 @@ const Register = () => {
 		const res = await axios.post(url, body);
 		if (res.data.statusCode == 200) {
 			history.push("/auth/login");
+			goodNotification("Registration successfull", "Please sign in to continue");
 		} else {
 			// cannot add user
+			badNotification("This username is taken. Please use another username");
 		}
 	};
 
