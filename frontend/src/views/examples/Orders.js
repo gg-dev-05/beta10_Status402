@@ -38,10 +38,25 @@ import { useEffect, useState } from "react";
 const Orders = () => {
   const [filter, setFilter] = useState(0);
   const [filtClients, setFiltClients] = useState(data.clients);
+  const [editIndex, setEditIndex] = useState(null);
+  const [editOrder, setEditOrder] = useState(null);
 
   const handleFilter = (filt) => {
     console.log(filt);
     setFilter(filt);
+  };
+
+  const confirmEdit = () => {
+    console.log(editOrder);
+  };
+
+  const handleEdit = (client) => {
+    if (editIndex === client.id) {
+      setEditIndex(null);
+    } else {
+      setEditIndex(client.id);
+      setEditOrder(client);
+    }
   };
 
   useEffect(() => {
@@ -116,6 +131,9 @@ const Orders = () => {
                     <Label check>Completed</Label>
                   </FormGroup>
                 </Col>
+                <Col sm={5} lg={2} className="p-2 mr-3">
+                  <Button className="">Add Order</Button>
+                </Col>
               </div>
               <Table className="align-items-center table-flush" responsive>
                 <thead className="thead-light">
@@ -136,29 +154,117 @@ const Orders = () => {
                         <th scope="row">
                           <Media className="align-items-center">
                             <Media>
-                              <span className="mb-0 text-sm">
-                                {Clients.name}
-                              </span>
+                              {editIndex !== Clients.id ? (
+                                <span className="mb-0 text-sm">
+                                  {Clients.name}
+                                </span>
+                              ) : (
+                                <Input
+                                  type="text"
+                                  value={editOrder.name}
+                                  onChange={(e) =>
+                                    setEditOrder({
+                                      ...editOrder,
+                                      name: e.target.value,
+                                    })
+                                  }
+                                ></Input>
+                              )}
                             </Media>
                           </Media>
                         </th>
-                        <td>{Clients.crop}</td>
+                        <td>
+                          {editIndex !== Clients.id ? (
+                            <p>{`${Clients.crop}`}</p>
+                          ) : (
+                            <Input
+                              type="select"
+                              onChange={(e) =>
+                                setEditOrder({
+                                  ...editOrder,
+                                  crop: e.target.value,
+                                })
+                              }
+                            >
+                              <option value="Rice">Rice</option>
+                              <option value="Wheat">Wheat</option>
+                              <option value="Bajra">Bajra</option>
+                              <option value="Moong">Moong</option>
+                              <option value="Urad">Urad</option>
+                              <option value="Jowar">Jowar</option>
+                              <option value="Maize">Maize</option>
+                            </Input>
+                          )}
+                        </td>
                         <td>
                           <Badge color="" className="badge-dot mr-4">
                             <i className="bg-warning" />
-                            {Clients.weight} Kg
+                            {editIndex !== Clients.id ? (
+                              <p>{`${Clients.weight} Kg`}</p>
+                            ) : (
+                              <Input
+                                type="text"
+                                value={editOrder.weight}
+                                onChange={(e) =>
+                                  setEditOrder({
+                                    ...editOrder,
+                                    weight: e.target.value,
+                                  })
+                                }
+                              ></Input>
+                            )}
                           </Badge>
                         </td>
                         <td>
                           <div color="" className="mr-4">
-                            {Clients.price} RS
+                            {editIndex !== Clients.id ? (
+                              <p>{`${Clients.price} Rs`}</p>
+                            ) : (
+                              <Input
+                                type="text"
+                                value={editOrder.price}
+                                onChange={(e) =>
+                                  setEditOrder({
+                                    ...editOrder,
+                                    price: e.target.value,
+                                  })
+                                }
+                              ></Input>
+                            )}
                           </div>
                         </td>
                         <td>
-                          <div className="mr-4">{Clients.status}</div>
+                          <div className="mr-4">
+                            {editIndex !== Clients.id ? (
+                              <p>{Clients.status}</p>
+                            ) : (
+                              <Input
+                                type="select"
+                                onChange={(e) =>
+                                  setEditOrder({
+                                    ...editOrder,
+                                    status: e.target.value,
+                                  })
+                                }
+                              >
+                                <option value="Completed">Completed</option>
+                                <option value="Pending">Pending</option>
+                              </Input>
+                            )}
+                          </div>
                         </td>
                         <td>
-                          <Button className="">Edit</Button>
+                          <Button
+                            className=""
+                            onClick={() => handleEdit(Clients)}
+                          >
+                            {editIndex !== Clients.id ? "Edit" : "Cancel"}
+                          </Button>
+                        </td>
+                        <td>
+                          {editIndex === Clients.id && (
+                            <Button onChange={confirmEdit}>Confirm</Button>
+                          )}
                         </td>
                       </tr>
                     );
