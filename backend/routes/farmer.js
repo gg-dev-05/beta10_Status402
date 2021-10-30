@@ -4,6 +4,7 @@ const Farmer = require("../models/farmer");
 const Inventory = require("../models/inventory");
 const Orders = require("../models/orders");
 const Message = require("../models/message");
+const Consumer = require("../models/consumer");
 const jwt = require("jsonwebtoken");
 const { verifyTokenFarmer } = require("../Common/VerifyToken");
 
