@@ -1,13 +1,18 @@
 import os
 from flask import Flask, jsonify, request
+from flask_cors import CORS, cross_origin
 import numpy as np
 import pickle
 import warnings
 
 app = Flask(__name__)
+cors = CORS(app)
 warnings.filterwarnings("ignore")
 
+app.config['CORS_HEADERS'] = 'Content-Type'
+
 @app.route("/")
+@cross_origin()
 def returnPrice():
     item = request.args.get("item")
     month = request.args.get("month")
@@ -54,4 +59,4 @@ def returnPrice():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
