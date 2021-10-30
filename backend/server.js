@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const indexRouter = require("./routes/index");
+const farmerRouter = require("./routes/farmer");
 
 require("dotenv").config();
 
@@ -19,6 +20,11 @@ connection.once("open", () => {
 });
 
 app.use("/", indexRouter);
+app.use("/farmer", farmerRouter);
+
+app.use((req, res) => {
+	res.status(200).json({ statusCode: 404, message: "URL not found" });
+});
 
 app.listen(port, () => {
 	console.log(`Server is running on port: ${port}`);
