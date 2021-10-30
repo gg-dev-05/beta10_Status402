@@ -31,8 +31,19 @@ import {
 } from "reactstrap";
 // core components
 import UserHeader from "components/Headers/UserHeader.js";
+import { useState } from "react";
 
 const Profile = () => {
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+
+  const handleChangePassword = () => {
+    console.log(oldPassword);
+    console.log(newPassword);
+    console.log(confirmNewPassword);
+  };
+
   return (
     <>
       <UserHeader />
@@ -268,6 +279,10 @@ const Profile = () => {
                         <Input
                           className="form-control-alternative"
                           type="password"
+                          value={oldPassword}
+                          onChange={(e) => {
+                            setOldPassword(e.target.value);
+                          }}
                         />
                       </FormGroup>
                     </Col>
@@ -277,6 +292,10 @@ const Profile = () => {
                         <Input
                           className="form-control-alternative"
                           type="password"
+                          value={newPassword}
+                          onChange={(e) => {
+                            setNewPassword(e.target.value);
+                          }}
                         />
                       </FormGroup>
                     </Col>
@@ -286,11 +305,19 @@ const Profile = () => {
                         <Input
                           className="form-control-alternative"
                           type="password"
+                          value={confirmNewPassword}
+                          onChange={(e) => {
+                            setConfirmNewPassword(e.target.value);
+                          }}
                         />
                       </FormGroup>
                     </Col>
                     <Col lg="3">
-                      <Button color="info" className="btn btn-primary">
+                      <Button
+                        color="info"
+                        className="btn btn-primary"
+                        onClick={handleChangePassword}
+                      >
                         Change Password
                       </Button>
                     </Col>
