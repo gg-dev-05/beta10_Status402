@@ -13,7 +13,7 @@ function Navbars() {
         <div className="Navbars">
             <Navbar bg="light" expand="lg">
                 <Container fluid>
-                    <Navbar.Brand href="#">Farmer Helper</Navbar.Brand>
+                    <Navbar.Brand href="/">Farmer Helper</Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbarScroll" />
                     <Navbar.Collapse id="navbarScroll">
                     <Nav
