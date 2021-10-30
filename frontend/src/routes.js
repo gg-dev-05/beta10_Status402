@@ -22,6 +22,7 @@ import Register from "views/examples/Register.js";
 import Login from "views/examples/Login.js";
 //import Tables from "views/examples/Tables.js";
 import Orders from "views/examples/Orders";
+import Inventory from "views/examples/Inventory";
 //import Icons from "views/examples/Icons.js";
 
 var routes = [
@@ -37,6 +38,13 @@ var routes = [
     name: "Orders",
     icon: "ni ni-planet text-blue",
     component: Orders,
+    layout: "/farmer",
+  },
+  {
+    path: "/inventory",
+    name: "Inventory",
+    icon: "ni ni-planet text-blue",
+    component: Inventory,
     layout: "/farmer",
   },
   {

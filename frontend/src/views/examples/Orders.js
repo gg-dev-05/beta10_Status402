@@ -34,6 +34,8 @@ import {
 import Header from "components/Headers/Header.js";
 import data from "../client.json";
 import { useEffect, useState } from "react";
+import axios from "axios";
+import { BASE_URL } from "Common/Constants";
 
 const Orders = () => {
   const [filter, setFilter] = useState(0);
@@ -60,6 +62,19 @@ const Orders = () => {
   };
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    console.log(token);
+
+    axios
+      .get(BASE_URL + "farmer/order", {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      });
+
     if (filter === 1) {
       setFiltClients(
         data.clients.filter((client) => client.status === "pending")
