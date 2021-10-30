@@ -1,7 +1,13 @@
-import { initializeApp, auth } from "firebase/app";
+import { initializeApp } from "firebase/app";
 import dotenv from "dotenv";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithRedirect,
+  signOut,
+} from "firebase/auth";
+
 dotenv.config();
-import { auth, GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -15,11 +21,10 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-export const authorize = auth();
+export const auth = getAuth();
 const googleProvider = new GoogleAuthProvider();
 export const signInWithGoogle = () => {
-  authorize
-    .signInWithRedirect(authorize, googleProvider)
+  signInWithRedirect(auth, googleProvider)
     .then((res) => {
       console.log(res.user);
     })
@@ -29,8 +34,7 @@ export const signInWithGoogle = () => {
 };
 
 export const logOut = () => {
-  auth
-    .signOut()
+  signOut(auth)
     .then(() => {
       console.log("logged out");
     })

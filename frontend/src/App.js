@@ -1,12 +1,15 @@
-import './App.css';
-import Navbar from './components/Navbar/Navbar';
-import NewsAndSchemes from './components/NewsAndSchemes/NewsAndSchemes';
+import "./App.css";
+import UserProvider from "./firebase/UserProvider";
+import Navbar from "./Components/Navbar/Navbar";
+import NewsAndSchemes from "./Components/NewsAndSchemes/NewsAndSchemes";
 function App() {
   return (
-    <div className="App">
-      <Navbar/>
-      <NewsAndSchemes/>
-    </div>
+    <UserProvider>
+      <div className="App">
+        <Navbar />
+        <NewsAndSchemes />
+      </div>
+    </UserProvider>
   );
 }
 
