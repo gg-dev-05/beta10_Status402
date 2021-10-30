@@ -1,15 +1,21 @@
 import React, { useState, useEffect, createContext } from "react";
-import { auth } from "./firebase";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 export const UserContext = createContext({ user: null });
-export default () => {
+export default (props) => {
   const [user, setuser] = useState(null);
   useEffect(() => {
-    auth.onAuthStateChanged(async (user) => {
-      const { displayName, email } = user;
-      setuser({
-        displayName,
-        email,
-      });
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      console.log(user);
+      if (user) {
+        const { displayName, email } = user;
+        setuser({
+          displayName,
+          email,
+        });
+      } else {
+        setuser(null);
+      }
     });
   }, []);
   return (
