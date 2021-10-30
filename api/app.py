@@ -2,9 +2,10 @@ import os
 from flask import Flask, jsonify, request
 import numpy as np
 import pickle
+import warnings
 
 app = Flask(__name__)
-
+warnings.filterwarnings("ignore")
 
 @app.route("/")
 def returnPrice():
@@ -28,11 +29,6 @@ def returnPrice():
 
         scaler = pickle.load(open('models/scaler.pkl', 'rb'))
         loaded_model = pickle.load(open('models/model.sav', 'rb'))
-
-        # inputs
-        year = 2021
-        month = 4
-        num = ((year-2000)*12)+month
 
         finalDate = scaler.transform(np.array([num]).reshape(-1,1))
 
