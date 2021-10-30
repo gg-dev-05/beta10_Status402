@@ -35,7 +35,7 @@ const MapWrapper = () => {
   const [lat, setLat] = useState("0.0");
   const [lng, setLng] = useState("0.0");
 
-  React.useEffect(() => {
+  React.useEffect(async () => {
     let position = navigator.geolocation.getCurrentPosition(success, error);
 
     if (!position) {
