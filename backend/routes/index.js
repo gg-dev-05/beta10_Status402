@@ -17,7 +17,7 @@ router.route("/checkUser").post((req, res) => {
 			jwt.verify(token, process.env.PRIVATE_KEY_CONSUMERS);
 			res.status(200).json({ statusCode: 200, user: "consumer" });
 		} catch (err1) {
-			res.status(200).json({ statusCode: 200, user: "undefined" });
+			res.status(200).json({ statusCode: 200, user: "guest" });
 		}
 	}
 });

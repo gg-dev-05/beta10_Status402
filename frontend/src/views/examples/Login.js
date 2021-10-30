@@ -35,7 +35,7 @@ import {
 import { BASE_URL } from "../../Common/Constants";
 import axios from "axios";
 
-const Login = () => {
+const Login = ({ refresh }) => {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 
@@ -59,6 +59,7 @@ const Login = () => {
 		const res = await axios.post(url, body);
 		if (res.data.statusCode == 200) {
 			localStorage.setItem("token", res.data.token);
+			refresh();
 		} else {
 			// cannot add user
 		}

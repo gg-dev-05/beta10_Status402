@@ -38,7 +38,7 @@ const Admin = (props) => {
 
 	const getRoutes = (routes) => {
 		return routes.map((prop, key) => {
-			if (prop.layout === "/admin") {
+			if (prop.layout === "/farmer") {
 				return <Route path={prop.layout + prop.path} component={prop.component} key={key} />;
 			} else {
 				return null;
@@ -61,7 +61,7 @@ const Admin = (props) => {
 				{...props}
 				routes={routes}
 				logo={{
-					innerLink: "/admin/index",
+					innerLink: "/farmer/index",
 					imgSrc: require("../assets/img/brand/argon-react.png").default,
 					imgAlt: "...",
 				}}
@@ -70,7 +70,7 @@ const Admin = (props) => {
 				<AdminNavbar {...props} brandText={getBrandText(props.location.pathname)} />
 				<Switch>
 					{getRoutes(routes)}
-					<Redirect from="*" to="/admin/index" />
+					<Redirect from="*" to="/farmer/index" />
 				</Switch>
 				<Container fluid>
 					<AdminFooter />
