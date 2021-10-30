@@ -6,14 +6,14 @@ const { verifyTokenFarmer } = require("../Common/VerifyToken");
 
 require("dotenv").config();
 
-router.route("/").get(async (req, res) => {
-	try {
-		const result = await Farmer.find();
-		res.status(200).json({ statusCode: 200, message: "fetched farmers' list", result });
-	} catch (err) {
-		res.status(200).json({ statusCode: 500, message: err.message });
-	}
-});
+// router.route("/").get(async (req, res) => {
+// 	try {
+// 		const result = await Farmer.find();
+// 		res.status(200).json({ statusCode: 200, message: "fetched farmers' list", result });
+// 	} catch (err) {
+// 		res.status(200).json({ statusCode: 500, message: err.message });
+// 	}
+// });
 
 router.route("/farmer").get(verifyTokenFarmer, async (req, res) => {
 	try {

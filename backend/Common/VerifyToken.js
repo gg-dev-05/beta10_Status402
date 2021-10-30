@@ -4,9 +4,9 @@ require("dotenv").config();
 function verifyTokenFarmer(req, res, next) {
 	try {
 		const token = req.headers.authorization.split(" ")[1];
-		console.log(token);
+		// console.log(token);
 		const decoded = jwt.verify(token, process.env.PRIVATE_KEY_FARMERS);
-		console.log(decoded);
+		// console.log(decoded);
 		req.user = decoded;
 		next();
 	} catch (err) {

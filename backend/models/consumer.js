@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-const farmerSchema = new Schema(
+const consumerSchema = new Schema(
 	{
 		username: { type: String, required: true, unique: true },
 		password: { type: String, required: true },
@@ -14,6 +14,6 @@ const farmerSchema = new Schema(
 	}
 );
 
-const Farmer = model("Farmer", farmerSchema);
+const Consumer = model("Consumer", consumerSchema);
 
-module.exports = Farmer;
+module.exports = Consumer;
