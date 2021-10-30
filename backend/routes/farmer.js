@@ -140,7 +140,7 @@ router.route("/inventory/remove/:id").delete(verifyTokenFarmer, async (req, res)
 	}
 });
 
-// get order details
+// get all order details
 router.route("/order").get(verifyTokenFarmer, async (req, res) => {
 	try {
 		const result = await Orders.find({ farmer: req.user._id });
@@ -150,8 +150,79 @@ router.route("/order").get(verifyTokenFarmer, async (req, res) => {
 	}
 });
 
-// update order status
+// add order
+router.route("/order").post(verifyTokenFarmer, async (req, res) => {
+	try {
+		if (
+			!validateParams([
+				req.body.itemId,
+				req.body.quantity,
+				req.body.units,
+				req.body.price,
+				req.body.consumerName,
+				req.body.consumerEmail,
+				req.body.consumerPhone,
+			])
+		) {
+			res.status(200).json({ statusCode: 400, message: "Params missing" });
+		} else {
+			const newOrder = Orders({ ...req.body, farmer: req.user._id });
+			newOrder.status = 0;
+			const result = await newOrder.save();
+
+			res.status(200).json({ statusCode: 200, message: "created order", result });
+		}
+	} catch (err) {
+		res.status(200).json({ statusCode: 500, message: err.message });
+	}
+});
+
+// update order
 router.route("/order/:id").put(verifyTokenFarmer, async (req, res) => {
+	try {
+		if (
+			!validateParams([
+				req.body.itemId,
+				req.body.quantity,
+				req.body.units,
+				req.body.price,
+				req.body.status,
+				req.body.consumerName,
+				req.body.consumerEmail,
+				req.body.consumerPhone,
+			])
+		) {
+			res.status(200).json({ statusCode: 400, message: "Params missing" });
+		} else {
+			const order = await Orders.findOne({ farmer: req.user._id, _id: req.params.id });
+			order.itemId = Number(req.body.itemId);
+			order.quantity = req.body.quantity;
+			order.units = req.body.units;
+			order.price = req.body.price;
+			order.status = req.body.status;
+			order.consumerName = req.body.consumerName;
+			order.consumerEmail = req.body.consumerEmail;
+			order.consumerPhone = req.body.consumerPhone;
+
+			const item = Inventory.findById(order.itemId);
+			if (!item || (item.quantity < order.quantity && order.status == 1)) {
+				res.status(200).json({ statusCode: 403, message: "insufficient quantity of given item", result });
+			} else {
+				const result = await order.save();
+				if (order.status == 1) {
+					item.quantity -= order.quantity;
+					await item.save();
+				}
+				res.status(200).json({ statusCode: 200, message: "updated order", result });
+			}
+		}
+	} catch (err) {
+		res.status(200).json({ statusCode: 500, message: err.message });
+	}
+});
+
+// remove order
+router.route("/order/:id").delete(verifyTokenFarmer, async (req, res) => {
 	try {
 		if (!validateParams([req.body.status])) {
 			res.status(200).json({ statusCode: 400, message: "Params missing" });

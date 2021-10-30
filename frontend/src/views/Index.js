@@ -479,9 +479,6 @@ const Index = (props) => {
 					</Col>
 				</Row>
 			</Container>
-			<Alert color="danger">
-				<strong>Danger!</strong> This is a danger alert—check it out!
-			</Alert>
 		</>
 	);
 };

@@ -3,22 +3,15 @@ const { Schema, model } = require("mongoose");
 const ordersSchema = new Schema(
 	{
 		farmer: { type: Schema.Types.ObjectId, ref: "Farmer" },
-		consumer: { type: Schema.Types.ObjectId, ref: "Consumer" },
-		items: {
-			type: [
-				{
-					itemId: { type: Schema.Types.ObjectId, ref: "Inventory" },
-					quantity: { type: Number, default: 0 },
-					units: { type: String, default: "kg" },
-					price: { type: Number, default: 0 },
-				},
-			],
-			default: [],
-		},
+		itemId: { type: Schema.Types.ObjectId, ref: "Inventory" },
+		quantity: { type: Number, default: 0 },
+		units: { type: String, default: "kg" },
 		price: { type: Number, default: 0 },
-		// 0 - pending, -1 - cancelled, 1 - confirmed, 2 - delivered
+		// 0 - pending, 1 - confirmed
 		status: { type: Number, default: 0 },
-		discount: { type: Number, default: 0 },
+		consumerName: { type: String, default: "" },
+		consumerEmail: { type: String, default: "" },
+		consumerPhone: { type: Number, default: null },
 	},
 	{
 		timestamps: true,
