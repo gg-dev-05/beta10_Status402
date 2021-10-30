@@ -7,6 +7,7 @@ const Message = require("../models/message");
 const Consumer = require("../models/consumer");
 const jwt = require("jsonwebtoken");
 const { verifyTokenFarmer } = require("../Common/VerifyToken");
+const bcrypt = require("bcryptjs");
 
 require("dotenv").config();
 
@@ -46,7 +47,11 @@ router.route("/add").post(async (req, res) => {
 		if (!validateParams([req.body.username, req.body.password])) {
 			res.status(200).json({ statusCode: 400, message: "Params missing, username and password required" });
 		} else {
-			const newFarmer = new Farmer(req.body);
+			const salt = bcrypt.genSaltSync(12);
+			const hash = bcrypt.hashSync(req.body.password, salt);
+
+			const newFarmer = new Farmer({ username: req.body.username, password: hash });
+
 			const result = await newFarmer.save();
 			res.status(200).json({ statusCode: 200, message: "added farmer", result });
 		}
@@ -63,7 +68,7 @@ router.route("/login").post(async (req, res) => {
 			res.status(200).json({ statusCode: 400, message: "Params missing, username and password required" });
 		} else {
 			const farmer = await Farmer.findOne({ username: req.body.username });
-			if (farmer && req.body.password === farmer.password) {
+			if (farmer && bcrypt.compareSync(req.body.password, farmer.password)) {
 				var token = jwt.sign({ _id: farmer._id, username: farmer.username }, process.env.PRIVATE_KEY_FARMERS);
 				res.status(200).json({ statusCode: 200, message: "authenticated", token });
 			} else {
