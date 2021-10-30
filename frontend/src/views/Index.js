@@ -144,12 +144,13 @@ const Index = (props) => {
 	};
 
 	const getForecast = async () => {
-		const ip = await axios.get("https://geolocation-db.com/json/");
 		const res = await axios.get(
-			`http://api.weatherapi.com/v1/forecast.json?key=${process.env.REACT_APP_API_KEY}&q=${ip.data.IPv4}&days=4&alerts=yes`
+			`http://api.weatherapi.com/v1/forecast.json?key=${process.env.REACT_APP_API_KEY}&q=auto:ip&days=4&alerts=yes`
 		);
 		return res;
 	};
+
+
 
 	useEffect(async () => {
 		setGraphLoading(true);
