@@ -37,8 +37,10 @@ import {
 } from "reactstrap";
 // core components
 import Header from "components/Headers/Header.js";
+import data from '../client.json'
 
 const Tables = () => {
+
   return (
     <>
       <Header />
@@ -62,30 +64,32 @@ const Tables = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">
-                      <Media className="align-items-center">
-                        <Media>
-                          <span className="mb-0 text-sm">
-                            Rahul Agarwal
-                          </span>
+                
+                  {data.clients.map((Clients, index) => (    
+                    <tr>
+                      <th scope="row">
+                        <Media className="align-items-center">
+                          <Media>
+                            <span className="mb-0 text-sm">
+                              {Clients.name}
+                            </span>
+                          </Media>
                         </Media>
-                      </Media>
-                    </th>
-                    <td>Wheat</td>
-                    <td>
-                      <Badge color="" className="badge-dot mr-4">
-                        <i className="bg-warning" />
-                        20 Kg
-                      </Badge>
-                    </td>
-                    <td>
-                      <div color="" className="mr-4">
-                        540 RS
-                      </div>
-                    </td>
-                  </tr>
-                  
+                      </th>
+                      <td>{Clients.crop}</td>
+                      <td>
+                        <Badge color="" className="badge-dot mr-4">
+                          <i className="bg-warning" />
+                          {Clients.weight} Kg
+                        </Badge>
+                      </td>
+                      <td>
+                        <div color="" className="mr-4">
+                        {Clients.price} RS
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </Table>
               
