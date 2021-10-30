@@ -15,7 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
+import React, { useState } from "react";
 
 // reactstrap components
 import { Card, Container, Row } from "reactstrap";
@@ -24,91 +24,40 @@ import { Card, Container, Row } from "reactstrap";
 import Header from "components/Headers/Header.js";
 
 const MapWrapper = () => {
-  const mapRef = React.useRef(null);
+  function success(position) {
+    return position;
+  }
+
+  function error() {
+    return null;
+  }
+
+  const [lat, setLat] = useState("0.0");
+  const [lng, setLng] = useState("0.0");
+
   React.useEffect(() => {
-    let google = window.google;
-    let map = mapRef.current;
-    let lat = "40.748817";
-    let lng = "-73.985428";
-    const myLatlng = new google.maps.LatLng(lat, lng);
-    const mapOptions = {
-      zoom: 12,
-      center: myLatlng,
-      scrollwheel: false,
-      zoomControl: true,
-      styles: [
-        {
-          featureType: "administrative",
-          elementType: "labels.text.fill",
-          stylers: [{ color: "#444444" }],
-        },
-        {
-          featureType: "landscape",
-          elementType: "all",
-          stylers: [{ color: "#f2f2f2" }],
-        },
-        {
-          featureType: "poi",
-          elementType: "all",
-          stylers: [{ visibility: "off" }],
-        },
-        {
-          featureType: "road",
-          elementType: "all",
-          stylers: [{ saturation: -100 }, { lightness: 45 }],
-        },
-        {
-          featureType: "road.highway",
-          elementType: "all",
-          stylers: [{ visibility: "simplified" }],
-        },
-        {
-          featureType: "road.arterial",
-          elementType: "labels.icon",
-          stylers: [{ visibility: "off" }],
-        },
-        {
-          featureType: "transit",
-          elementType: "all",
-          stylers: [{ visibility: "off" }],
-        },
-        {
-          featureType: "water",
-          elementType: "all",
-          stylers: [{ color: "#5e72e4" }, { visibility: "on" }],
-        },
-      ],
-    };
+    let position = navigator.geolocation.getCurrentPosition(success, error);
 
-    map = new google.maps.Map(map, mapOptions);
+    if (!position) {
+      return;
+    }
+    setLat(position.coords.latitude);
+    setLng(position.coords.langitude);
+  }, [lat, lng]);
 
-    const marker = new google.maps.Marker({
-      position: myLatlng,
-      map: map,
-      animation: google.maps.Animation.DROP,
-      title: "Light Bootstrap Dashboard PRO React!",
-    });
+  console.log(lat);
+  console.log(lng);
 
-    const contentString =
-      '<div class="info-window-content"><h2>Light Bootstrap Dashboard PRO React</h2>' +
-      "<p>A premium Admin for React-Bootstrap, Bootstrap, React, and React Hooks.</p></div>";
-
-    const infowindow = new google.maps.InfoWindow({
-      content: contentString,
-    });
-
-    google.maps.event.addListener(marker, "click", function () {
-      infowindow.open(map, marker);
-    });
-  }, []);
   return (
     <>
-      <div
-        style={{ height: `600px` }}
-        className="map-canvas"
-        id="map-canvas"
-        ref={mapRef}
-      ></div>
+      <div>
+        <iframe
+          style={{ height: `600px` }}
+          className="map-canvas"
+          id="map-canvas"
+          src={`http://maps.google.com/maps/embed?z=12&t=m&q=loc:+${lat}+-${lng};output=embed`}
+        ></iframe>
+      </div>
     </>
   );
 };
