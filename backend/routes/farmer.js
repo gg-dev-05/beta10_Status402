@@ -58,6 +58,7 @@ router.route("/add").post(async (req, res) => {
 // farmer login
 router.route("/login").post(async (req, res) => {
 	try {
+		console.log(req.body);
 		if (!validateParams([req.body.username, req.body.password])) {
 			res.status(200).json({ statusCode: 400, message: "Params missing, username and password required" });
 		} else {
