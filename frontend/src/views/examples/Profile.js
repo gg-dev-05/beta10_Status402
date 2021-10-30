@@ -256,6 +256,45 @@ const Profile = () => {
                       />
                     </FormGroup>
                   </div>
+                  <hr className="my-4" />
+
+                  <h6 className="heading-small text-muted mb-4">
+                    Change Password
+                  </h6>
+                  <div className="pl-lg-4">
+                    <Col lg="4">
+                      <FormGroup>
+                        <label>Old Password</label>
+                        <Input
+                          className="form-control-alternative"
+                          type="password"
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col lg="4">
+                      <FormGroup>
+                        <label>New Password</label>
+                        <Input
+                          className="form-control-alternative"
+                          type="password"
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col lg="4">
+                      <FormGroup>
+                        <label>Confirm New Password</label>
+                        <Input
+                          className="form-control-alternative"
+                          type="password"
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col lg="3">
+                      <Button color="info" className="btn btn-primary">
+                        Change Password
+                      </Button>
+                    </Col>
+                  </div>
                 </Form>
               </CardBody>
             </Card>
