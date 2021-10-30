@@ -39,25 +39,79 @@ import {
 } from "reactstrap";
 
 // core components
-import { chartOptions, parseOptions, chartExample1, chartExample2 } from "variables/charts.js";
+import { chartOptions, parseOptions, chartExample1, chartExample2, chartExample3, chartExample4 } from "variables/charts.js";
 
 import Header from "components/Headers/Header.js";
 
 import axios from "axios";
 import { API_URL } from "Common/Constants";
+require('dotenv').config()
+
+function returnForecast(param, forecastData) {
+	if (forecastData === {}) return;
+	if (!("forecast" in forecastData)) return;
+	if (!("forecastday" in forecastData.forecast)) return;
+	const days = []
+	days.push(forecastData.current)
+	for (var i = 0; i < 3; i++) {
+		days.push(forecastData.forecast.forecastday[i].hour[5])
+		days.push(forecastData.forecast.forecastday[i].hour[17])
+	}
+
+	if (param === 1) {
+		const labels = []
+		const data = []
+		labels.push("Today")
+		data.push(days[0].humidity)
+		for (var i = 1; i < 7; i++) {
+			labels.push(new Date(days[i].time).toLocaleString())
+			data.push(days[i].humidity)
+		}
+		return {
+			labels: labels,
+			datasets: [
+				{
+					data: data,
+				},
+			],
+		};
+	}
+	else {
+		const labels = []
+		const data = []
+		labels.push("Today")
+		data.push(days[0].temp_c)
+		for (var i = 1; i < 7; i++) {
+			labels.push(new Date(days[i].time).toLocaleString())
+			data.push(days[i].temp_c)
+		}
+		return {
+			labels: labels,
+			datasets: [
+				{
+					data: data,
+				},
+			],
+		};
+
+	}
+}
 
 const Index = (props) => {
-	const [activeNav, setActiveNav] = useState(1);
-	const [chartExample1Data, setChartExample1Data] = useState("data1");
+	const [activeNav, setActiveNav] = useState(1); // 0 => Rain, 1 => Temp
+	const [typeOfForecast, setTypeOfForecast] = useState("0"); // 0 => Rainfall, 1 => Temperature
+	const [forecastData, setForecastData] = useState({})
+
 
 	if (window.Chart) {
 		parseOptions(Chart, chartOptions());
 	}
 
+
 	const toggleNavs = (e, index) => {
 		e.preventDefault();
 		setActiveNav(index);
-		setChartExample1Data("data" + index);
+		setTypeOfForecast(index);
 	};
 
 	const [crop, setCrop] = useState("bajra");
@@ -80,6 +134,20 @@ const Index = (props) => {
 		);
 		return res;
 	};
+
+	const getForecast = async () => {
+		// TODO: Error checking for if IP address is not available 
+		const ip = await axios.get('https://geolocation-db.com/json/')
+		const res = await axios.get(
+			`http://api.weatherapi.com/v1/forecast.json?key=${process.env.REACT_APP_API_KEY}&q=${ip.data.IPv4}&days=4`
+		);
+		return res;
+	};
+
+	useEffect(async () => {
+		const data = await getForecast()
+		setForecastData(data.data)
+	}, [])
 
 	useEffect(async () => {
 		setChartLoading(true);
@@ -109,7 +177,7 @@ const Index = (props) => {
 		for (let i = 0; i < dates.length; i++) {
 			let date1 = dates[i];
 			let price = await getPrice(date1);
-			console.log(price);
+			// console.log(price);
 			prices.push(Math.round(price.data.price * 100) / 100);
 		}
 
@@ -141,7 +209,7 @@ const Index = (props) => {
 								<Row className="align-items-center">
 									<div className="col">
 										<h6 className="text-uppercase text-light ls-1 mb-1">Overview</h6>
-										<h2 className="text-white mb-0">Sales value</h2>
+										<h2 className="text-white mb-0">Expected {activeNav === 1 ? "Humidity" : "Temperature"}</h2>
 									</div>
 									<div className="col">
 										<Nav className="justify-content-end" pills>
@@ -153,8 +221,8 @@ const Index = (props) => {
 													href="#pablo"
 													onClick={(e) => toggleNavs(e, 1)}
 												>
-													<span className="d-none d-md-block">Month</span>
-													<span className="d-md-none">M</span>
+													<span className="d-none d-md-block">Humidity</span>
+													<span className="d-md-none">H</span>
 												</NavLink>
 											</NavItem>
 											<NavItem>
@@ -166,8 +234,8 @@ const Index = (props) => {
 													href="#pablo"
 													onClick={(e) => toggleNavs(e, 2)}
 												>
-													<span className="d-none d-md-block">Week</span>
-													<span className="d-md-none">W</span>
+													<span className="d-none d-md-block">Temperature</span>
+													<span className="d-md-none">T</span>
 												</NavLink>
 											</NavItem>
 										</Nav>
@@ -178,8 +246,8 @@ const Index = (props) => {
 								{/* Chart */}
 								<div className="chart">
 									<Line
-										data={chartExample1[chartExample1Data]}
-										options={chartExample1.options}
+										data={returnForecast(activeNav, forecastData)}
+										options={activeNav === 1 ? chartExample3.options : chartExample4.options}
 										getDatasetAtEvent={(e) => console.log(e)}
 									/>
 								</div>
@@ -402,5 +470,6 @@ const Index = (props) => {
 		</>
 	);
 };
+
 
 export default Index;

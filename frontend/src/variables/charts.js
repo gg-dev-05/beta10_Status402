@@ -346,7 +346,18 @@ let chartExample1 = {
 			datasets: [
 				{
 					label: "Performance",
-					data: [0, 20, 10, 30, 15, 40, 20, 60, 60],
+					data: [0, 2, 10, 30, 15, 40, 20, 60, 60],
+				},
+			],
+		};
+	},
+	data10: (canvas) => {
+		return {
+			labels: ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+			datasets: [
+				{
+					label: "Performance",
+					data: [0, 200, 10, 30, 150, 40, 20, 60, 60],
 				},
 			],
 		};
@@ -357,7 +368,7 @@ let chartExample1 = {
 			datasets: [
 				{
 					label: "Performance",
-					data: [0, 20, 5, 25, 10, 30, 15, 40, 40],
+					data: [0, 20, 500, 25, 10, 30, 15, 40, 40],
 				},
 			],
 		};
@@ -373,8 +384,7 @@ let chartExample2 = {
 					ticks: {
 						callback: function (value) {
 							if (!(value % 10)) {
-								//return '$' + value + 'k'
-								return value;
+								return '$' + value + 'k'
 							}
 						},
 					},
@@ -410,9 +420,87 @@ let chartExample2 = {
 	},
 };
 
+let chartExample3 = {
+	options: {
+		scales: {
+			yAxes: [
+				{
+					gridLines: {
+						color: colors.gray[900],
+						zeroLineColor: colors.gray[900],
+					},
+					ticks: {
+						callback: function (value) {
+							if (!(value % 10)) {
+								return "" + value + "%";
+							}
+						},
+					},
+				},
+			],
+		},
+		tooltips: {
+			callbacks: {
+				label: function (item, data) {
+					var label = data.datasets[item.datasetIndex].label || "";
+					var yLabel = item.yLabel;
+					var content = "";
+					console.log(item);
+					if (data.datasets.length > 1) {
+						content += label;
+					}
+
+					content += "" + yLabel + "%";
+					return content;
+				},
+			},
+		},
+	},
+};
+
+let chartExample4 = {
+	options: {
+		scales: {
+			yAxes: [
+				{
+					gridLines: {
+						color: colors.gray[900],
+						zeroLineColor: colors.gray[900],
+					},
+					ticks: {
+						callback: function (value) {
+							if (!(value % 10)) {
+								return "" + value + "ºC";
+							}
+						},
+					},
+				},
+			],
+		},
+		tooltips: {
+			callbacks: {
+				label: function (item, data) {
+					var label = data.datasets[item.datasetIndex].label || "";
+					var yLabel = item.yLabel;
+					var content = "";
+					console.log(item);
+					if (data.datasets.length > 1) {
+						content += label;
+					}
+
+					content += "" + yLabel + "ºC";
+					return content;
+				},
+			},
+		},
+	},
+};
+
 module.exports = {
 	chartOptions, // used inside src/views/Index.js
 	parseOptions, // used inside src/views/Index.js
 	chartExample1, // used inside src/views/Index.js
 	chartExample2, // used inside src/views/Index.js
+	chartExample3,
+	chartExample4,
 };
