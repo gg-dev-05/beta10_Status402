@@ -39,8 +39,6 @@ const Login = ({ refresh }) => {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 
-	const [userType, setUserType] = useState(0);
-
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
@@ -51,10 +49,7 @@ const Login = ({ refresh }) => {
 
 		console.log(body);
 
-		let url = BASE_URL;
-
-		if (userType == 0) url += "farmer/login";
-		else url += "consumer/login";
+		const url = BASE_URL + "farmer/login";
 
 		const res = await axios.post(url, body);
 		if (res.data.statusCode == 200) {
@@ -114,30 +109,6 @@ const Login = ({ refresh }) => {
 									/>
 								</InputGroup>
 							</FormGroup>
-							<div
-								className="d-flex align-items-center"
-								onClick={() => {
-									setUserType(0);
-								}}
-								style={{ cursor: "pointer" }}
-							>
-								<div className={userType === 0 ? "blueBox" : "whiteBox"}></div>
-								<label htmlFor="customCheckRegister" style={{ cursor: "pointer", marginBottom: 0 }}>
-									<span>Farmer</span>
-								</label>
-							</div>
-							<div
-								className="d-flex align-items-center mb-4"
-								onClick={() => {
-									setUserType(1);
-								}}
-								style={{ cursor: "pointer" }}
-							>
-								<div className={userType === 1 ? "blueBox" : "whiteBox"}></div>
-								<label htmlFor="customCheckRegister" style={{ cursor: "pointer", marginBottom: 0 }}>
-									<span>Consumer</span>
-								</label>
-							</div>
 							<div className="text-center">
 								<Button className="my-4" color="primary" type="submit">
 									Sign in

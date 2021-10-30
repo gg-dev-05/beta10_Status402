@@ -44,8 +44,6 @@ const Register = () => {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 
-	const [userType, setUserType] = useState(0);
-
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
@@ -54,10 +52,7 @@ const Register = () => {
 			password,
 		};
 
-		let url = BASE_URL;
-
-		if (userType == 0) url += "farmer/add";
-		else url += "consumer/add";
+		let url = BASE_URL + "farmer/add";
 
 		const res = await axios.post(url, body);
 		if (res.data.statusCode == 200) {
@@ -116,30 +111,6 @@ const Register = () => {
 									/>
 								</InputGroup>
 							</FormGroup>
-							<div
-								className="d-flex align-items-center"
-								onClick={() => {
-									setUserType(0);
-								}}
-								style={{ cursor: "pointer" }}
-							>
-								<div className={userType === 0 ? "blueBox" : "whiteBox"}></div>
-								<label htmlFor="customCheckRegister" style={{ cursor: "pointer", marginBottom: 0 }}>
-									<span>Farmer</span>
-								</label>
-							</div>
-							<div
-								className="d-flex align-items-center mb-4"
-								onClick={() => {
-									setUserType(1);
-								}}
-								style={{ cursor: "pointer" }}
-							>
-								<div className={userType === 1 ? "blueBox" : "whiteBox"}></div>
-								<label htmlFor="customCheckRegister" style={{ cursor: "pointer", marginBottom: 0 }}>
-									<span>Consumer</span>
-								</label>
-							</div>
 							<div className="text-center">
 								<Button className="mt-4" color="primary" type="submit">
 									Create account

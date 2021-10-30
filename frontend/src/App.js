@@ -16,7 +16,6 @@ function App() {
 	};
 
 	useEffect(async () => {
-		console.log("G");
 		const url = BASE_URL + "checkUser";
 		const res = await axios.post(url, { token: localStorage.getItem("token") });
 		setUserType(res.data.user);
@@ -28,19 +27,17 @@ function App() {
 				{userType === "farmer" && (
 					<>
 						<Route path="/farmer" render={(props) => <AdminLayout {...props} refresh={refresh} />} />
-						<Redirect from="/" to="/farmer/index" />
+						<Route>
+							<Redirect to="/farmer/index" />
+						</Route>
 					</>
 				)}
 				{userType === "guest" && (
 					<>
 						<Route path="/auth" render={(props) => <AuthLayout {...props} refresh={refresh} />} />
-						<Redirect from="/" to="/auth/register" />
+						<Redirect to="/auth/login" />
 					</>
 				)}
-				{userType === "consumer" &&
-					{
-						/* some component */
-					}}
 			</Switch>
 		</BrowserRouter>
 	);
