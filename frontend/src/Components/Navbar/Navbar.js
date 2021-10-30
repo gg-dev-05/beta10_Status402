@@ -23,7 +23,7 @@ function Navbars() {
                     >
                         <Nav.Link href="#action1">Weather Prediction</Nav.Link>
                         {/* connected to middleware */}
-                        <Nav.Link href="#action2">Market Prices</Nav.Link>
+                        <Nav.Link href="/PricePrediction">Predicted Market Prices</Nav.Link>
                         <Nav.Link href="#action3">Login</Nav.Link>
                         {/* <NavDropdown title="Link" id="navbarScrollingDropdown">
                         <NavDropdown.Item href="#action4">Action</NavDropdown.Item>
