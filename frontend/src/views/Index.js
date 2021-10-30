@@ -39,34 +39,41 @@ import {
 } from "reactstrap";
 
 // core components
-import { chartOptions, parseOptions, chartExample1, chartExample2, chartExample3, chartExample4 } from "variables/charts.js";
+import {
+	chartOptions,
+	parseOptions,
+	chartExample1,
+	chartExample2,
+	chartExample3,
+	chartExample4,
+} from "variables/charts.js";
 import { Alert } from "reactstrap";
 
 import Header from "components/Headers/Header.js";
 
 import axios from "axios";
 import { API_URL } from "Common/Constants";
-require('dotenv').config()
+require("dotenv").config();
 
 function returnForecast(param, forecastData) {
 	if (forecastData === {}) return;
 	if (!("forecast" in forecastData)) return;
 	if (!("forecastday" in forecastData.forecast)) return;
-	const days = []
-	days.push(forecastData.current)
+	const days = [];
+	days.push(forecastData.current);
 	for (var i = 0; i < 3; i++) {
-		days.push(forecastData.forecast.forecastday[i].hour[5])
-		days.push(forecastData.forecast.forecastday[i].hour[17])
+		days.push(forecastData.forecast.forecastday[i].hour[5]);
+		days.push(forecastData.forecast.forecastday[i].hour[17]);
 	}
 
 	if (param === 1) {
-		const labels = []
-		const data = []
-		labels.push("Today")
-		data.push(days[0].humidity)
+		const labels = [];
+		const data = [];
+		labels.push("Today");
+		data.push(days[0].humidity);
 		for (var i = 1; i < 7; i++) {
-			labels.push(new Date(days[i].time).toLocaleString())
-			data.push(days[i].humidity)
+			labels.push(new Date(days[i].time).toLocaleString());
+			data.push(days[i].humidity);
 		}
 		return {
 			labels: labels,
@@ -76,15 +83,14 @@ function returnForecast(param, forecastData) {
 				},
 			],
 		};
-	}
-	else {
-		const labels = []
-		const data = []
-		labels.push("Today")
-		data.push(days[0].temp_c)
+	} else {
+		const labels = [];
+		const data = [];
+		labels.push("Today");
+		data.push(days[0].temp_c);
 		for (var i = 1; i < 7; i++) {
-			labels.push(new Date(days[i].time).toLocaleString())
-			data.push(days[i].temp_c)
+			labels.push(new Date(days[i].time).toLocaleString());
+			data.push(days[i].temp_c);
 		}
 		return {
 			labels: labels,
@@ -94,20 +100,17 @@ function returnForecast(param, forecastData) {
 				},
 			],
 		};
-
 	}
 }
 
 const Index = (props) => {
 	const [activeNav, setActiveNav] = useState(1); // 0 => Rain, 1 => Temp
 	const [typeOfForecast, setTypeOfForecast] = useState("0"); // 0 => Rainfall, 1 => Temperature
-	const [forecastData, setForecastData] = useState({})
-
+	const [forecastData, setForecastData] = useState({});
 
 	if (window.Chart) {
 		parseOptions(Chart, chartOptions());
 	}
-
 
 	const toggleNavs = (e, index) => {
 		e.preventDefault();
@@ -129,16 +132,22 @@ const Index = (props) => {
 		],
 	});
 
-	const getPrice = async (date1) => {
+	const getPrice = async (date1, index) => {
+		const years = [2009, 2010, 2011, 2012, 2013, 2014];
 		const res = await axios.get(
-			"https://price-predictor-api3.herokuapp.com/?item=" + crop + "&year=" + date1.year + "&month=" + date1.month
+			"https://price-predictor-api3.herokuapp.com/?item=" +
+				crop +
+				"&year=" +
+				years[index] +
+				"&month=" +
+				date1.month
 		);
 		return res;
 	};
 
 	const getForecast = async () => {
-		// TODO: Error checking for if IP address is not available 
-		const ip = await axios.get('https://geolocation-db.com/json/')
+		// TODO: Error checking for if IP address is not available
+		const ip = await axios.get("https://geolocation-db.com/json/");
 		const res = await axios.get(
 			`http://api.weatherapi.com/v1/forecast.json?key=${process.env.REACT_APP_API_KEY}&q=${ip.data.IPv4}&days=4&alerts=yes`
 		);
@@ -146,9 +155,9 @@ const Index = (props) => {
 	};
 
 	useEffect(async () => {
-		const data = await getForecast()
-		setForecastData(data.data)
-	}, [])
+		const data = await getForecast();
+		setForecastData(data.data);
+	}, []);
 
 	useEffect(async () => {
 		setChartLoading(true);
@@ -177,7 +186,7 @@ const Index = (props) => {
 
 		for (let i = 0; i < dates.length; i++) {
 			let date1 = dates[i];
-			let price = await getPrice(date1);
+			let price = await getPrice(date1, i);
 			// console.log(price);
 			prices.push(Math.round(price.data.price * 100) / 100);
 		}
@@ -210,7 +219,9 @@ const Index = (props) => {
 								<Row className="align-items-center">
 									<div className="col">
 										<h6 className="text-uppercase text-light ls-1 mb-1">Overview</h6>
-										<h2 className="text-white mb-0">Expected {activeNav === 1 ? "Humidity" : "Temperature"}</h2>
+										<h2 className="text-white mb-0">
+											Expected {activeNav === 1 ? "Humidity" : "Temperature"}
+										</h2>
 									</div>
 									<div className="col">
 										<Nav className="justify-content-end" pills>
@@ -474,6 +485,5 @@ const Index = (props) => {
 		</>
 	);
 };
-
 
 export default Index;

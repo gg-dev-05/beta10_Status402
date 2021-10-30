@@ -10,6 +10,7 @@ const ordersSchema = new Schema(
 					itemId: { type: Schema.Types.ObjectId, ref: "Inventory" },
 					quantity: { type: Number, default: 0 },
 					units: { type: String, default: "kg" },
+					price: { type: Number, default: 0 },
 				},
 			],
 			default: [],
@@ -17,6 +18,7 @@ const ordersSchema = new Schema(
 		price: { type: Number, default: 0 },
 		// 0 - pending, -1 - cancelled, 1 - confirmed, 2 - delivered
 		status: { type: Number, default: 0 },
+		discount: { type: Number, default: 0 },
 	},
 	{
 		timestamps: true,
