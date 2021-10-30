@@ -13,12 +13,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function Navbars() {
   const user = useContext(UserContext);
   console.log(user);
-
   return (
     <div className="Navbars">
       <Navbar bg="light" expand="lg">
         <Container fluid>
-          <Navbar.Brand href="#">Farmer Helper</Navbar.Brand>
+          <Navbar.Brand href="/">Farmer Helper</Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
@@ -28,7 +27,9 @@ function Navbars() {
             >
               <Nav.Link href="#action1">Weather Prediction</Nav.Link>
               {/* connected to middleware */}
-              <Nav.Link href="#action2">Market Prices</Nav.Link>
+              <Nav.Link href="/PricePrediction">
+                Predicted Market Prices
+              </Nav.Link>
               <Nav.Link onClick={user ? logOut : signInWithGoogle}>
                 {user ? "Logout" : "Login"}
               </Nav.Link>
