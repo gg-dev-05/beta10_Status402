@@ -42,12 +42,11 @@ import {
 import {
 	chartOptions,
 	parseOptions,
-	chartExample1,
 	chartExample2,
 	chartExample3,
 	chartExample4,
 } from "variables/charts.js";
-import { Alert } from "reactstrap";
+
 
 import Header from "components/Headers/Header.js";
 
@@ -105,8 +104,8 @@ function returnForecast(param, forecastData) {
 
 const Index = (props) => {
 	const [activeNav, setActiveNav] = useState(1); // 0 => Rain, 1 => Temp
-	const [typeOfForecast, setTypeOfForecast] = useState("0"); // 0 => Rainfall, 1 => Temperature
 	const [forecastData, setForecastData] = useState({});
+	const [graphLoading, setGraphLoading] = useState(true);
 
 	if (window.Chart) {
 		parseOptions(Chart, chartOptions());
@@ -115,7 +114,6 @@ const Index = (props) => {
 	const toggleNavs = (e, index) => {
 		e.preventDefault();
 		setActiveNav(index);
-		setTypeOfForecast(index);
 	};
 
 	const [crop, setCrop] = useState("bajra");
@@ -136,17 +134,16 @@ const Index = (props) => {
 		const years = [2009, 2010, 2011, 2012, 2013, 2014];
 		const res = await axios.get(
 			"https://price-predictor-api3.herokuapp.com/?item=" +
-				crop +
-				"&year=" +
-				years[index] +
-				"&month=" +
-				date1.month
+			crop +
+			"&year=" +
+			years[index] +
+			"&month=" +
+			date1.month
 		);
 		return res;
 	};
 
 	const getForecast = async () => {
-		// TODO: Error checking for if IP address is not available
 		const ip = await axios.get("https://geolocation-db.com/json/");
 		const res = await axios.get(
 			`http://api.weatherapi.com/v1/forecast.json?key=${process.env.REACT_APP_API_KEY}&q=${ip.data.IPv4}&days=4&alerts=yes`
@@ -155,8 +152,10 @@ const Index = (props) => {
 	};
 
 	useEffect(async () => {
+		setGraphLoading(true);
 		const data = await getForecast();
 		setForecastData(data.data);
+		setGraphLoading(false);
 	}, []);
 
 	useEffect(async () => {
@@ -257,11 +256,13 @@ const Index = (props) => {
 							<CardBody>
 								{/* Chart */}
 								<div className="chart">
-									<Line
-										data={returnForecast(activeNav, forecastData)}
-										options={activeNav === 1 ? chartExample3.options : chartExample4.options}
-										getDatasetAtEvent={(e) => console.log(e)}
-									/>
+									{graphLoading && <p>Fetching Location...</p>}
+									{!graphLoading &&
+										<Line
+											data={returnForecast(activeNav, forecastData)}
+											options={activeNav === 1 ? chartExample3.options : chartExample4.options}
+											getDatasetAtEvent={(e) => console.log(e)}
+										/>}
 								</div>
 							</CardBody>
 						</Card>
