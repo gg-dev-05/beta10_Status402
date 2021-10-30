@@ -5,35 +5,40 @@
 			"name": "Somya Bansal",
             "crop": "Rice",
             "weight": "10",
-            "price": "540"
+            "price": "540",
+            "status": "completed"
 		},
 		{
             "id": "1942315678",
 			"name": "Aditya Sharma",
             "crop": "Wheat",
             "weight": "15",
-            "price": "1050"
+            "price": "1050",
+            "status": "pending"
 		},
 		{
             "id": "1645132789",
 			"name": "Yash Maheshwari",
             "crop": "Urad",
             "weight": "5",
-            "price": "810"
+            "price": "810",
+            "status": "completed"
         },
 		{
             "id": "1834126789",
 			"name": "Divya Gupta",
             "crop": "Rice",
             "weight": "25",
-            "price": "1350"
+            "price": "1350",
+            "status": "completed"
         },
 		{
             "id": "1843154268",
 			"name": "Utkarsh Kumar",
             "crop": "Bajra",
             "weight": "20",
-            "price": "750"
+            "price": "750",
+            "status": "pending"
         }
 	]
 }
