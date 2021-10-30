@@ -2,9 +2,10 @@ import os
 from flask import Flask, jsonify, request
 import numpy as np
 import pickle
+import warnings
 
 app = Flask(__name__)
-
+warnings.filterwarnings("ignore")
 
 @app.route("/")
 def returnPrice():
