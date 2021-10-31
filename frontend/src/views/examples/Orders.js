@@ -17,6 +17,10 @@
 */
 // reactstrap components
 import {
+	Modal,
+	ModalHeader,
+	ModalFooter,
+	ModalBody,
 	Badge,
 	Card,
 	CardHeader,
@@ -40,8 +44,10 @@ import { BASE_URL } from "Common/Constants";
 const Orders = () => {
 	const [filter, setFilter] = useState(0);
 	const [filtClients, setFiltClients] = useState(data.clients);
+	const [modal, setModal] = useState(false);
 	const [editIndex, setEditIndex] = useState(null);
 	const [editOrder, setEditOrder] = useState(null);
+	const [newOrder, setNewOrder] = useState(null);
 
 	const handleFilter = (filt) => {
 		console.log(filt);
@@ -146,8 +152,72 @@ const Orders = () => {
 									</Label>
 								</Col>
 								<Col sm={5} lg={2} className="p-2 mr-3">
-									<Button className="">Add Order</Button>
+									<Button className="" onClick={() => setModal(true)}>
+										Add Order
+									</Button>
 								</Col>
+								<Modal isOpen={modal} toggle={() => setModal(!modal)}>
+									<ModalHeader>Add Order</ModalHeader>
+									{/* <ModalBody> */}
+									{/* <Form>
+                      <FormGroup>
+                        <Label>Crop</Label>
+                        <Input
+                          type="select"
+                          onChange={(e) =>
+                            setNewItem({ ...newItem, crop: e.target.value })
+                          }
+                        >
+                          <option value="Rice">Rice</option>
+                          <option value="Wheat">Wheat</option>
+                          <option value="Bajra">Bajra</option>
+                          <option value="Moong">Moong</option>
+                          <option value="Jowar">Jowar</option>
+                          <option value="Urad">Urad</option>
+                          <option value="Maize">Maize</option>
+                        </Input>
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>Quantity</Label>
+                        <Input
+                          type="text"
+                          value={newItem.quantity}
+                          onChange={(e) =>
+                            setNewItem({ ...newItem, quantity: e.target.value })
+                          }
+                        ></Input>
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>Units</Label>
+                        <Input
+                          type="text"
+                          value={newItem.units}
+                          onChange={(e) =>
+                            setNewItem({ ...newItem, units: e.target.value })
+                          }
+                        ></Input>
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>Price</Label>
+                        <Input
+                          type="text"
+                          value={newItem.price}
+                          onChange={(e) =>
+                            setNewItem({ ...newItem, price: e.target.value })
+                          }
+                        ></Input>
+                      </FormGroup>
+                    </Form>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button color="primary" onClick={addItem}>
+                      Add
+                    </Button>{" "}
+                    <Button color="secondary" onClick={() => setModal(false)}>
+                      Cancel
+                    </Button>
+                  </ModalFooter> */}
+								</Modal>
 							</div>
 							<Table className="align-items-center table-flush" responsive>
 								<thead className="thead-light">
