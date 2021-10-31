@@ -35,14 +35,14 @@ var routes = [
   {
     path: "/orders",
     name: "Orders",
-    icon: "ni ni-planet text-blue",
+    icon: "ni ni-planet text-orange",
     component: Orders,
     layout: "/farmer",
   },
   {
     path: "/inventory",
     name: "Inventory",
-    icon: "ni ni-planet text-blue",
+    icon: "ni ni-box-2 text-green",
     component: Inventory,
     layout: "/farmer",
   },
@@ -53,13 +53,6 @@ var routes = [
     component: Profile,
     layout: "/farmer",
   },
-  // {
-  //   path: "/tables",
-  //   name: "Tables",
-  //   icon: "ni ni-bullet-list-67 text-red",
-  //   component: Tables,
-  //   layout: "/farmer",
-  // },
   {
     path: "/logout",
     name: "Logout",
