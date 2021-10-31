@@ -59,6 +59,8 @@ function returnForecast(param, forecastData) {
 		days.push(forecastData.forecast.forecastday[i].hour[5]);
 		days.push(forecastData.forecast.forecastday[i].hour[17]);
 	}
+	console.log(days)
+	days.sort(compare)
 
 	if (param === 1) {
 		const labels = [];
@@ -344,5 +346,15 @@ const Index = (props) => {
 		</>
 	);
 };
+
+function compare(a, b) {
+	if (a.time < b.time) {
+		return -1;
+	}
+	if (a.time > b.time) {
+		return 1;
+	}
+	return 0;
+}
 
 export default Index;
