@@ -2,6 +2,7 @@ import React from "react";
 import { Row, Col, CardHeader, Table, Card } from "reactstrap";
 import crops from "./crops.json";
 const Rainfall = ({ currentRainfall }) => {
+	currentRainfall = 250;
 	const suggestedCrops = [];
 	Object.keys(crops).forEach((crop) => {
 		if (crops[crop].min_rain <= currentRainfall && currentRainfall <= crops[crop].max_rain)
@@ -31,9 +32,9 @@ const Rainfall = ({ currentRainfall }) => {
 					<tbody>
 						{suggestedCrops.length === 0 && (
 							<tr>
-								<td >Sorry No Suggestions :(</td>
-								<td > </td>
-								<td > </td>
+								<td>Sorry No Suggestions :(</td>
+								<td> </td>
+								<td> </td>
 							</tr>
 						)}
 						{suggestedCrops.length > 0 &&

@@ -121,7 +121,7 @@ const Index = (props) => {
 	const [forecastData, setForecastData] = useState({});
 	const [graphLoading, setGraphLoading] = useState(true);
 	const [alerts, setAlerts] = useState([]);
-	const [weatherImg, setWeatherImg] = useState("https://cdn.weatherapi.com/weather/64x64/day/113.png")
+	const [weatherImg, setWeatherImg] = useState("https://cdn.weatherapi.com/weather/64x64/day/113.png");
 
 	if (window.Chart) {
 		parseOptions(Chart, chartOptions());
@@ -132,7 +132,7 @@ const Index = (props) => {
 		setActiveNav(index);
 	};
 
-	const [crop, setCrop] = useState("bajra");
+	const [crop, setCrop] = useState("rice");
 	const [chartLoading, setChartLoading] = useState(true);
 
 	const [chart2Data, setChart2Data] = useState({
@@ -150,11 +150,11 @@ const Index = (props) => {
 		const years = [2009, 2010, 2011, 2012, 2013, 2014];
 		const res = await axios.get(
 			"https://price-predictor-api3.herokuapp.com/?item=" +
-			crop +
-			"&year=" +
-			years[index] +
-			"&month=" +
-			date1.month
+				crop +
+				"&year=" +
+				years[index] +
+				"&month=" +
+				date1.month
 		);
 		return res;
 	};
@@ -174,7 +174,7 @@ const Index = (props) => {
 		setAlerts(alerts);
 		setGraphLoading(false);
 		console.log(data.data.current.condition.icon);
-		setWeatherImg("https:" + data.data.current.condition.icon)
+		setWeatherImg("https:" + data.data.current.condition.icon);
 	}, []);
 
 	useEffect(async () => {
@@ -236,7 +236,9 @@ const Index = (props) => {
 							<CardHeader className="bg-transparent">
 								<Row className="align-items-center">
 									<div className="col">
-										<h6 className="text-uppercase text-light ls-1 mb-1">Overview <img src={weatherImg} width={25} height={25}></img></h6>
+										<h6 className="text-uppercase text-light ls-1 mb-1">
+											Overview <img src={weatherImg} width={25} height={25}></img>
+										</h6>
 										<h2 className="text-white mb-0">
 											Expected {activeNav === 1 ? "Humidity" : "Temperature"}
 										</h2>
