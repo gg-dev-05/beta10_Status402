@@ -28,8 +28,10 @@ router.route("/changePassword").post(verifyTokenFarmer, async (req, res) => {
 			res.status(200).json({ statusCode: 400, message: "Params missing" });
 		} else {
 			const farmer = await Farmer.findById(req.user._id);
-			if (farmer.password == req.body.oldPassword) {
-				farmer.password = req.body.newPassword;
+			if (bcrypt.compareSync(req.body.oldPassword, farmer.password)) {
+				const salt = bcrypt.genSaltSync(12);
+				const hash = bcrypt.hashSync(req.body.newPassword, salt);
+				farmer.password = hash;
 				const result = await farmer.save();
 				res.status(200).json({ statusCode: 200, message: "changed password", result });
 			} else {
