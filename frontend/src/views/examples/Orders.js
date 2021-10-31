@@ -79,9 +79,9 @@ const Orders = () => {
 			.then((res) => {
 				console.log(res);
 				if (res.data.statusCode == 200) {
-					goodNotification("edit Order", "Order edited successfully");
+					goodNotification("Success", "Order updated successfully");
 					fetchOrders();
-					setEditOrder(null);
+					// setEditOrder(null);
 					setEditIndex(null);
 				} else {
 					badNotification("Unable to edit order");
@@ -467,7 +467,7 @@ const Orders = () => {
 												<td>
 													<div className="mr-4">
 														{editIndex !== order._id ? (
-															<p>{order.status == 0 ? "pending" : "completed"}</p>
+															<p>{order.status == 0 ? "Pending" : "Completed"}</p>
 														) : (
 															<Input
 																type="select"
@@ -478,8 +478,8 @@ const Orders = () => {
 																	})
 																}
 															>
-																<option value={1}>Completed</option>
 																<option value={0}>Pending</option>
+																<option value={1}>Completed</option>
 															</Input>
 														)}
 													</div>
