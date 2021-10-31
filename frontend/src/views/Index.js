@@ -331,8 +331,8 @@ const Index = (props) => {
 				{alerts &&
 					alerts.map((alert, _index) => (
 						<Alert color="danger" key={_index}>
-							<strong>{alert.event}</strong>
-							<em>{alert.headline}</em>
+							<strong>{alert.event}</strong>&nbsp;&nbsp;
+							<em>{alert.desc}</em>
 						</Alert>
 					))}
 				{!chartLoading && <Suggestions data={forecastData} />}
