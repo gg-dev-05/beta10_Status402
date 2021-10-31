@@ -217,47 +217,50 @@ const Orders = () => {
                 <Col
                   sm={5}
                   lg={1}
-                  className="p-2 ml-auto mr-2"
-                  style={{ backgroundColor: "#808080", borderRadius: "10px" }}
+                  className="p-2 ml-auto mr-2 d-flex justify-content-center align-items-center"
+                  style={{
+                    backgroundColor: "rgb(69, 69, 69)",
+                    borderRadius: "10px",
+                    cursor: "pointer",
+                    opacity: filter === 0 ? 1 : 0.5,
+                  }}
+                  onClick={() => handleFilter(0)}
                 >
-                  <FormGroup check>
-                    <Input
-                      name="filter"
-                      type="radio"
-                      onChange={() => handleFilter(0)}
-                    />{" "}
-                    <Label check>All</Label>
-                  </FormGroup>
+                  <Label check style={{ color: "#fff", cursor: "pointer" }}>
+                    All
+                  </Label>
                 </Col>
                 <Col
                   sm={5}
-                  lg={2}
-                  className="p-2 mr-3"
-                  style={{ backgroundColor: "#FFCF33", borderRadius: "10px" }}
+                  lg={1}
+                  className="p-2 mr-3 d-flex justify-content-center align-items-center"
+                  style={{
+                    backgroundColor: "rgb(246, 185, 0)",
+                    borderRadius: "10px",
+                    cursor: "pointer",
+                    opacity: filter === 1 ? 1 : 0.5,
+                  }}
+                  onClick={() => handleFilter(1)}
                 >
-                  <FormGroup check>
-                    <Input
-                      name="filter"
-                      type="radio"
-                      onChange={() => handleFilter(1)}
-                    />{" "}
-                    <Label check>Pending</Label>
-                  </FormGroup>
+                  <Label check style={{ color: "#fff", cursor: "pointer" }}>
+                    Pending
+                  </Label>
                 </Col>
                 <Col
                   sm={5}
-                  lg={2}
-                  className="p-2 mr-3"
-                  style={{ backgroundColor: "#228B22", borderRadius: "10px" }}
+                  lg={1}
+                  className="p-2 mr-3 d-flex justify-content-center align-items-center"
+                  style={{
+                    backgroundColor: "#228B22",
+                    borderRadius: "10px",
+                    cursor: "pointer",
+                    opacity: filter === 2 ? 1 : 0.5,
+                  }}
+                  onClick={() => handleFilter(2)}
                 >
-                  <FormGroup check>
-                    <Input
-                      name="filter"
-                      type="radio"
-                      onChange={() => handleFilter(2)}
-                    />{" "}
-                    <Label check>Completed</Label>
-                  </FormGroup>
+                  <Label check style={{ color: "#fff", cursor: "pointer" }}>
+                    Completed
+                  </Label>
                 </Col>
                 <Col sm={5} lg={2} className="p-2 mr-3">
                   <Button className="" onClick={() => setModal(true)}>
