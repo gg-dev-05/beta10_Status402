@@ -23,22 +23,26 @@ const Rainfall = ({ currentRainfall }) => {
 					<thead>
 						<tr>
 							<th scope="col">Crop</th>
-							<th scope="col">Min Required Temperature</th>
-							<th scope="col">Max Required Temperature</th>
+							<th scope="col">Min Required Rainfall</th>
+							<th scope="col">Max Required Rainfall</th>
 						</tr>
 					</thead>
 					<tbody>
-						{suggestedCrops.map((crop, index) => (
+						{suggestedCrops.length === 0 &&
+							<tr>
+								<td className="text-center">Sorry No Suggestions :(</td>
+							</tr>}
+						{suggestedCrops.length > 0 && suggestedCrops.map((crop, index) => (
 
 							<tr key={index + "crop"}>
 								<td>
 									{crop}
 								</td>
 								<td>
-									{crops[crop].min_T}
+									{crops[crop].min_rain}cm
 								</td>
 								<td>
-									{crops[crop].max_T}
+									{crops[crop].max_rain}cm
 								</td>
 							</tr>
 						))}

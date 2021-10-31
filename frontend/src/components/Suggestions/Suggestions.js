@@ -83,7 +83,7 @@ class Navs extends React.Component {
 					this.state.navPills === 1 && <Temperature currentTemperature={this.props.data.current.temp_c} />
 				}
 				{
-					this.state.navPills === 2 && <Rainfall />
+					this.state.navPills === 2 && <Rainfall currentRainfall={this.props.data.current.precip_mm * 0.1} />
 				}
 				{
 					this.state.navPills === 3 && <Location />
