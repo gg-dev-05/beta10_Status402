@@ -1,0 +1,82 @@
+{
+	"Rice": {
+		"min_T": 22,
+		"max_T": 32,
+		"min_rain": 150,
+		"max_rain": 300,
+		"locations": [
+			"West Bengal",
+			"Punjab",
+			"Uttar Pradesh",
+			"Andhra Pradesh",
+			"Bihar",
+			"Assam",
+			"Odisha"
+		]
+	},
+	"Wheat": {
+		"min_T": 10,
+		"max_T": 15,
+		"min_rain": 75,
+		"max_rain": 100,
+		"locations": [
+			"Uttar Pradesh",
+			"Punjab",
+			"Madhya Pradesh",
+			"Harayana",
+			"Rajasthan"
+		]
+	},
+	"Jowar": {
+		"min_T": 27,
+		"max_T": 32,
+		"min_rain": 50,
+		"max_rain": 100,
+		"locations": [
+			"Maharashtra",
+			"Karnataka",
+			"Madhya Pradesh",
+			"Tamil Nadu",
+			"Andhra Pradesh"
+		]
+	},
+	"Bajra": {
+		"min_T": 27,
+		"max_T": 32,
+		"min_rain": 50,
+		"max_rain": 100,
+		"locations": [
+			"Rajasthan",
+			"Karnataka",
+			"Gujrat",
+			"Madhya Pradesh",
+			"Harayana"
+		]
+	},
+	"Maize": {
+		"min_T": 21,
+		"max_T": 27,
+		"min_rain": 200,
+		"max_rain": 500,
+		"locations": [
+			"Karnataka",
+			"Maharashtra",
+			"Madhya Pradesh",
+			"Tamil Nadu",
+			"Telangana"
+		]
+	},
+	"Arhar": {
+		"min_T": 20,
+		"max_T": 27,
+		"min_rain": 25,
+		"max_rain": 60,
+		"locations": [
+			"Madhya Pradesh",
+			"Rajasthan",
+			"Maharashtra",
+			"Uttar Pradesh",
+			"Karnataka"
+		]
+	}
+}
