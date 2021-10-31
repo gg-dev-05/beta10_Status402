@@ -2,15 +2,15 @@
 
 # Beta 10 - Status402
 
-
 ## Features
 
-- Register and Login
-- Humidity and Temperature Prediction and giving suggestions to the farmer based on it.
-- Predicted Price of crops
-- Change Password Functionality
+-   Register and Login
+-   Humidity and Temperature Prediction and giving suggestions to the farmer based on it.
+-   Predicted Price of crops
+-   Change Password Functionality
 
 # Snapshots
+
 ![Screenshot (431)](https://user-images.githubusercontent.com/72788557/139569080-7a6cf69b-6929-4e87-a7c5-0252e72d0ec6.png)
 ![Screenshot (433)](https://user-images.githubusercontent.com/72788557/139569135-43a6400c-4672-49d4-b9a7-60d5de807f34.png)
 ![Screenshot (434)](https://user-images.githubusercontent.com/72788557/139569208-cad313b9-96c8-445e-ab58-7fc922c94466.png)
@@ -26,10 +26,10 @@
 ![Screenshot (456)](https://user-images.githubusercontent.com/72788557/139569322-721fef7a-9256-49b9-bdbb-3b99b5b47f6b.png)
 
 ## Links
-Let's have a visit on it: <a href="https://farmer-helper-v2.netlify.app/farmer/index/">Visit Us!!</a>  
+
+Let's have a visit on it: <a href="https://farmer-helper-v2.netlify.app/farmer/index/">Visit Us!!</a>
 
 ## Tech Stack
-
 
 <p align="center"><b>FRONTEND</b></p>
 <p align="center">
@@ -46,7 +46,6 @@ Let's have a visit on it: <a href="https://farmer-helper-v2.netlify.app/farmer/i
 		MongoDB
 </p>
 
-
 ## Contributors
 
 <p align="center">
@@ -62,10 +61,9 @@ Let's have a visit on it: <a href="https://farmer-helper-v2.netlify.app/farmer/i
 	<img src="https://github.com/Anushk2001.png" width="50px">
 </a>
 
-<a href="https://github.com/kushaangowda">
-  	<img src="https://github.com/kushaangowda.png" width="50px">
+<a href="https://github.com/lokeshkeelisetti">
+  	<img src="https://github.com/lokeshkeelisetti.png" width="50px">
 </a>
-
 
 </p>
 
@@ -73,5 +71,5 @@ Let's have a visit on it: <a href="https://farmer-helper-v2.netlify.app/farmer/i
 		<a href="https://github.com/gg-dev-05">Garvit Galgat</a> •
     <a href="https://github.com/somyamehta24">Kushaan Gowda</a> •
     <a href="https://github.com/Anushk2001">Anushk Gautam</a> •
-		<a href="https://github.com/dmdivyansh">keelisetti lokesh</a> •
+		<a href="https://github.com/lokeshkeelisetti">keelisetti lokesh</a>
 </p>
