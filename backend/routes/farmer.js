@@ -148,7 +148,7 @@ router.route("/inventory/remove/:id").delete(verifyTokenFarmer, async (req, res)
 // get all order details
 router.route("/order").get(verifyTokenFarmer, async (req, res) => {
 	try {
-		const result = await Orders.find({ farmer: req.user._id });
+		const result = await Orders.find({ farmer: req.user._id }).populate("itemId");
 		res.status(200).json({ statusCode: 200, message: "fetched orders", result });
 	} catch (err) {
 		res.status(200).json({ statusCode: 500, message: err.message });
@@ -200,7 +200,7 @@ router.route("/order/:id").put(verifyTokenFarmer, async (req, res) => {
 			res.status(200).json({ statusCode: 400, message: "Params missing" });
 		} else {
 			const order = await Orders.findOne({ farmer: req.user._id, _id: req.params.id });
-			order.itemId = Number(req.body.itemId);
+			order.itemId = req.body.itemId;
 			order.quantity = req.body.quantity;
 			order.units = req.body.units;
 			order.price = req.body.price;
