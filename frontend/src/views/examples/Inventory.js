@@ -56,8 +56,6 @@ const Inventory = () => {
     price: 0,
   });
 
-  console.log(items);
-
   //   const handleFilter = (filt) => {
   //     console.log(filt);
   //     setFilter(filt);
@@ -134,7 +132,6 @@ const Inventory = () => {
         },
       })
       .then((res) => {
-        console.log(res);
         if (res.data.statusCode == 200) {
           setItems(res.data.result);
         } else {
