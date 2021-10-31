@@ -1,18 +1,17 @@
-
-import React from 'react'
-import { Row, Col, CardHeader, Table, Card } from 'reactstrap'
-import crops from './crops.json'
+import React from "react";
+import { Row, Col, CardHeader, Table, Card } from "reactstrap";
+import crops from "./crops.json";
 const Temperature = () => {
-	const currentLocation = "Madhya Pradesh"
-	const suggestedCrops = []
+	const currentLocation = "Madhya Pradesh";
+	const suggestedCrops = [];
 	Object.keys(crops).forEach((crop) => {
 		crops[crop].locations.forEach((location) => {
 			if (location === currentLocation) suggestedCrops.push(crop);
-		})
-	})
+		});
+	});
 	return (
-		<Col className="mb-xl-0" xl="">
-			<Card className="shadow">
+		<Col className="mb-xl-0 p-0" xl="">
+			<Card className="shadow p-4">
 				<CardHeader className="border-0">
 					<Row className="align-items-center">
 						<div className="col">
@@ -20,28 +19,23 @@ const Temperature = () => {
 						</div>
 					</Row>
 				</CardHeader>
-				<p><strong>Current Location: {currentLocation}</strong></p>
+				<p>
+					<strong>Current Location: {currentLocation}</strong>
+				</p>
 				<Table className="align-items-center table-flush table-striped" responsive>
 					<thead>
 						<tr>
 							<th scope="col">Crop</th>
 							<th scope="col">Min Required Temperature</th>
-							<th scope="col">Max Required Temperature</th>
+							<th scope="col">Max Allowed Temperature</th>
 						</tr>
 					</thead>
 					<tbody>
 						{suggestedCrops.map((crop, index) => (
-
 							<tr key={index + "crop"}>
-								<td>
-									{crop}
-								</td>
-								<td>
-									{crops[crop].min_T}ºC
-								</td>
-								<td>
-									{crops[crop].max_T}ºC
-								</td>
+								<td>{crop}</td>
+								<td>{crops[crop].min_T}ºC</td>
+								<td>{crops[crop].max_T}ºC</td>
 							</tr>
 						))}
 						{/* <tr>
@@ -56,7 +50,7 @@ const Temperature = () => {
 				</Table>
 			</Card>
 		</Col>
-	)
-}
+	);
+};
 
-export default Temperature
+export default Temperature;

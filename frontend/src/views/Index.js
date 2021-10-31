@@ -39,18 +39,11 @@ import {
 } from "reactstrap";
 
 // core components
-import {
-	chartOptions,
-	parseOptions,
-	chartExample2,
-	chartExample3,
-	chartExample4,
-} from "variables/charts.js";
+import { chartOptions, parseOptions, chartExample2, chartExample3, chartExample4 } from "variables/charts.js";
 
-import Suggestions from '../components/Suggestions/Suggestions'
+import Suggestions from "../components/Suggestions/Suggestions";
 
-
-import Header from "components/Headers/Header.js";
+import Header from "components/Headers/Header";
 import { Alert } from "reactstrap";
 
 import axios from "axios";
@@ -109,15 +102,15 @@ function checkForAlerts(res) {
 	if (!("alerts" in res)) return;
 	const alerts = res.alerts.alert;
 	if (alerts.length === 0) return;
-	const alertsToDisplay = []
-	alerts.forEach((alert) => {
-		alertsToDisplay.push(
-			<Alert color="danger">
-				<strong>{alert.event}</strong>
-				<em>{alert.headline}</em>
-			</Alert>
-		)
-	})
+	const alertsToDisplay = alerts;
+	// alerts.forEach((alert) => {
+	// 	alertsToDisplay.push(
+	// 		<Alert color="danger">
+	// 			<strong>{alert.event}</strong>
+	// 			<em>{alert.headline}</em>
+	// 		</Alert>
+	// 	)
+	// })
 	return alertsToDisplay;
 }
 
@@ -125,7 +118,7 @@ const Index = (props) => {
 	const [activeNav, setActiveNav] = useState(1); // 0 => Rain, 1 => Temp
 	const [forecastData, setForecastData] = useState({});
 	const [graphLoading, setGraphLoading] = useState(true);
-	const [alerts, setAlerts] = useState([])
+	const [alerts, setAlerts] = useState([]);
 
 	if (window.Chart) {
 		parseOptions(Chart, chartOptions());
@@ -154,11 +147,11 @@ const Index = (props) => {
 		const years = [2009, 2010, 2011, 2012, 2013, 2014];
 		const res = await axios.get(
 			"https://price-predictor-api3.herokuapp.com/?item=" +
-			crop +
-			"&year=" +
-			years[index] +
-			"&month=" +
-			date1.month
+				crop +
+				"&year=" +
+				years[index] +
+				"&month=" +
+				date1.month
 		);
 		return res;
 	};
@@ -170,13 +163,11 @@ const Index = (props) => {
 		return res;
 	};
 
-
-
 	useEffect(async () => {
 		setGraphLoading(true);
 		const data = await getForecast();
 		setForecastData(data.data);
-		console.log(data.data)
+		console.log(data.data);
 		const alerts = checkForAlerts(data.data);
 		setAlerts(alerts);
 		setGraphLoading(false);
@@ -281,12 +272,13 @@ const Index = (props) => {
 								{/* Chart */}
 								<div className="chart">
 									{graphLoading && <p>Fetching Location...</p>}
-									{!graphLoading &&
+									{!graphLoading && (
 										<Line
 											data={returnForecast(activeNav, forecastData)}
 											options={activeNav === 1 ? chartExample3.options : chartExample4.options}
 											getDatasetAtEvent={(e) => console.log(e)}
-										/>}
+										/>
+									)}
 								</div>
 							</CardBody>
 						</Card>
@@ -336,9 +328,13 @@ const Index = (props) => {
 						</Card>
 					</Col>
 				</Row>
-				{alerts && alerts.map((alert, _index) => (
-					{ alert }
-				))}
+				{alerts &&
+					alerts.map((alert, _index) => (
+						<Alert color="danger" key={_index}>
+							<strong>{alert.event}</strong>
+							<em>{alert.headline}</em>
+						</Alert>
+					))}
 				{!chartLoading && <Suggestions data={forecastData} />}
 			</Container>
 		</>

@@ -53,7 +53,7 @@ const Auth = (props) => {
 							<Row className="justify-content-center">
 								<Col lg="5" md="6">
 									<h1 className="text-white">Welcome!</h1>
-									<p className="text-lead text-light">A Portal to help the farmers</p>
+									<p className="text-lead text-white">A Portal to help the farmers</p>
 								</Col>
 							</Row>
 						</div>
