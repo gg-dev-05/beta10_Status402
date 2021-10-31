@@ -49,9 +49,9 @@ import {
 
 
 import Header from "components/Headers/Header.js";
+import { Alert } from "reactstrap";
 
 import axios from "axios";
-import { API_URL } from "Common/Constants";
 require("dotenv").config();
 
 function returnForecast(param, forecastData) {
@@ -102,10 +102,28 @@ function returnForecast(param, forecastData) {
 	}
 }
 
+function checkForAlerts(res) {
+	if (res === {}) return;
+	if (!("alerts" in res)) return;
+	const alerts = res.alerts.alert;
+	if (alerts.length === 0) return;
+	const alertsToDisplay = []
+	alerts.forEach((alert) => {
+		alertsToDisplay.push(
+			<Alert color="danger">
+				<strong>{alert.event}</strong>
+				<em>{alert.headline}</em>
+			</Alert>
+		)
+	})
+	return alertsToDisplay;
+}
+
 const Index = (props) => {
 	const [activeNav, setActiveNav] = useState(1); // 0 => Rain, 1 => Temp
 	const [forecastData, setForecastData] = useState({});
 	const [graphLoading, setGraphLoading] = useState(true);
+	const [alerts, setAlerts] = useState([])
 
 	if (window.Chart) {
 		parseOptions(Chart, chartOptions());
@@ -156,6 +174,8 @@ const Index = (props) => {
 		setGraphLoading(true);
 		const data = await getForecast();
 		setForecastData(data.data);
+		const alerts = checkForAlerts(data.data);
+		setAlerts(alerts);
 		setGraphLoading(false);
 	}, []);
 
@@ -313,6 +333,9 @@ const Index = (props) => {
 						</Card>
 					</Col>
 				</Row>
+				{alerts && alerts.map((alert, index) => (
+					{ alert }
+				))}
 				<Row className="mt-5">
 					<Col className="mb-5 mb-xl-0" xl="8">
 						<Card className="shadow">
