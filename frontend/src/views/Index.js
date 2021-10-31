@@ -165,7 +165,7 @@ const Index = (props) => {
 
 	const getForecast = async () => {
 		const res = await axios.get(
-			`http://api.weatherapi.com/v1/forecast.json?key=${process.env.REACT_APP_API_KEY}&q=auto:ip&days=4&alerts=yes`
+			`https://api.weatherapi.com/v1/forecast.json?key=${process.env.REACT_APP_API_KEY}&q=auto:ip&days=4&alerts=yes`
 		);
 		return res;
 	};
