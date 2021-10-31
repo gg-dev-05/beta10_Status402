@@ -345,13 +345,22 @@ const Index = (props) => {
 					<span className="alert-inner--icon">
 						<i className="ni ni-like-2" />
 					</span>{" "}
+					Best time to harvest <strong>Moong</strong> has arrived (between February and March)
+				</UncontrolledAlert>
+				<UncontrolledAlert color="success" >
+					<span className="alert-inner--icon">
+						<i className="ni ni-like-2" />
+					</span>{" "}
 					Best time to harvest <strong>Rice</strong> has arrived (between November and December)
 				</UncontrolledAlert>
 				<UncontrolledAlert color="warning" >
-					Prices of <strong>Bajra</strong> are expected to increase by <em>1.49%</em> by Feb. <strong>Suggestion: Increase Inventory of Rice</strong>
+					Prices of <strong>Bajra</strong> are expected to increase by <em>1.49 times</em> by February. <strong>Suggestion: Increase Inventory of Rice</strong>
 				</UncontrolledAlert>
 				<UncontrolledAlert color="warning" >
-					Prices of <strong>Rice</strong> are expected to increase by <em>1.43%</em> by March. <strong>Suggestion: Increase Inventory of Rice</strong>
+					Prices of <strong>Rice</strong> are expected to increase by <em>1.43 times</em> by March. <strong>Suggestion: Increase Inventory of Rice</strong>
+				</UncontrolledAlert>
+				<UncontrolledAlert color="warning" >
+					Prices of <strong>Maize</strong> are expected to increase by <em>1.64 times</em> by February. <strong>Suggestion: Increase Inventory of Rice</strong>
 				</UncontrolledAlert>
 				{alerts &&
 					alerts.map((alert, _index) => (
