@@ -187,6 +187,16 @@ router.route("/order").post(verifyTokenFarmer, async (req, res) => {
 // update order
 router.route("/order/:id").put(verifyTokenFarmer, async (req, res) => {
 	try {
+		console.log(
+			req.body.itemId,
+			req.body.quantity,
+			req.body.units,
+			req.body.price,
+			req.body.status,
+			req.body.consumerName,
+			req.body.consumerEmail,
+			req.body.consumerPhone
+		);
 		if (
 			!validateParams([
 				req.body.itemId,
@@ -211,7 +221,7 @@ router.route("/order/:id").put(verifyTokenFarmer, async (req, res) => {
 			order.consumerEmail = req.body.consumerEmail;
 			order.consumerPhone = req.body.consumerPhone;
 
-			const item = Inventory.findById(order.itemId);
+			const item = await Inventory.findById(order.itemId);
 			if (!item || (item.quantity < order.quantity && order.status == 1)) {
 				res.status(200).json({ statusCode: 403, message: "insufficient quantity of given item", result });
 			} else {
