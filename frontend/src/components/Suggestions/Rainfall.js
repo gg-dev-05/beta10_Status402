@@ -31,7 +31,9 @@ const Rainfall = ({ currentRainfall }) => {
 					<tbody>
 						{suggestedCrops.length === 0 && (
 							<tr>
-								<td className="text-center">Sorry No Suggestions :(</td>
+								<td >Sorry No Suggestions :(</td>
+								<td > </td>
+								<td > </td>
 							</tr>
 						)}
 						{suggestedCrops.length > 0 &&
