@@ -44,7 +44,7 @@ import { chartOptions, parseOptions, chartExample2, chartExample3, chartExample4
 import Suggestions from "../components/Suggestions/Suggestions";
 
 import Header from "components/Headers/Header";
-import { Alert } from "reactstrap";
+import { UncontrolledAlert, Alert } from "reactstrap";
 
 import axios from "axios";
 require("dotenv").config();
@@ -150,11 +150,11 @@ const Index = (props) => {
 		const years = [2009, 2010, 2011, 2012, 2013, 2014];
 		const res = await axios.get(
 			"https://price-predictor-api3.herokuapp.com/?item=" +
-				crop +
-				"&year=" +
-				years[index] +
-				"&month=" +
-				date1.month
+			crop +
+			"&year=" +
+			years[index] +
+			"&month=" +
+			date1.month
 		);
 		return res;
 	};
@@ -334,6 +334,25 @@ const Index = (props) => {
 						</Card>
 					</Col>
 				</Row>
+				<span className="mt-2">&nbsp;</span>
+				<UncontrolledAlert color="success" >
+					<span className="alert-inner--icon">
+						<i className="ni ni-like-2" />
+					</span>{" "}
+					Best time to harvest <strong>Wheat</strong> has arrived (between October and November)
+				</UncontrolledAlert>
+				<UncontrolledAlert color="success" >
+					<span className="alert-inner--icon">
+						<i className="ni ni-like-2" />
+					</span>{" "}
+					Best time to harvest <strong>Rice</strong> has arrived (between November and December)
+				</UncontrolledAlert>
+				<UncontrolledAlert color="warning" >
+					Prices of <strong>Bajra</strong> are expected to increase by <em>1.49%</em> by Feb. <strong>Suggestion: Increase Inventory of Rice</strong>
+				</UncontrolledAlert>
+				<UncontrolledAlert color="warning" >
+					Prices of <strong>Rice</strong> are expected to increase by <em>1.43%</em> by March. <strong>Suggestion: Increase Inventory of Rice</strong>
+				</UncontrolledAlert>
 				{alerts &&
 					alerts.map((alert, _index) => (
 						<Alert color="danger" key={_index}>
