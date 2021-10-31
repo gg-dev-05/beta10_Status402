@@ -66,7 +66,7 @@ const Orders = () => {
     console.log(filt);
     setFilter(filt);
   };
-
+  console.log(editOrder);
   const confirmEdit = () => {
     console.log(editOrder);
 
@@ -123,7 +123,17 @@ const Orders = () => {
       setEditIndex(null);
     } else {
       setEditIndex(order._id);
-      setEditOrder(order);
+      setEditOrder({
+        _id: order._id,
+        itemId: order.itemId._id,
+        quantity: order.quantity,
+        units: order.units,
+        price: order.price,
+        consumerName: order.consumerName,
+        consumerEmail: order.consumerEmail,
+        consumerPhone: order.consumerPhone,
+        status: order.status,
+      });
     }
   };
 
@@ -155,13 +165,6 @@ const Orders = () => {
       .catch((err) => {
         badNotification("Unable to fetch orders");
       });
-  };
-
-  const getCrop = (itemId) => {
-    console.log(itemId);
-    const tempArray = inventory.filter((item) => item._id == itemId);
-    console.log(tempArray);
-    return tempArray[0].crop;
   };
 
   useEffect(() => {
@@ -402,7 +405,7 @@ const Orders = () => {
                         </th>
                         <td>
                           {editIndex !== order._id ? (
-                            <p>{`${getCrop(order.itemId)}`}</p>
+                            <p>{`${order.itemId.crop}`}</p>
                           ) : (
                             <Input
                               type="select"
