@@ -24,31 +24,30 @@ import Chart from "chart.js";
 import { Line, Bar } from "react-chartjs-2";
 // reactstrap components
 import {
-	Button,
-	Card,
-	CardHeader,
-	CardBody,
-	NavItem,
-	NavLink,
-	Nav,
-	Progress,
-	Table,
-	Container,
-	Row,
-	Col,
+  Button,
+  Card,
+  CardHeader,
+  CardBody,
+  NavItem,
+  NavLink,
+  Nav,
+  Progress,
+  Table,
+  Container,
+  Row,
+  Col,
 } from "reactstrap";
 
 // core components
 import {
-	chartOptions,
-	parseOptions,
-	chartExample2,
-	chartExample3,
-	chartExample4,
+  chartOptions,
+  parseOptions,
+  chartExample2,
+  chartExample3,
+  chartExample4,
 } from "variables/charts.js";
 
-import Suggestions from '../components/Suggestions/Suggestions'
-
+import Suggestions from "../components/Suggestions/Suggestions";
 
 import Header from "components/Headers/Header.js";
 import { Alert } from "reactstrap";
@@ -57,292 +56,322 @@ import axios from "axios";
 require("dotenv").config();
 
 function returnForecast(param, forecastData) {
-	if (forecastData === {}) return;
-	if (!("forecast" in forecastData)) return;
-	if (!("forecastday" in forecastData.forecast)) return;
-	const days = [];
-	days.push(forecastData.current);
-	for (var i = 0; i < 3; i++) {
-		days.push(forecastData.forecast.forecastday[i].hour[5]);
-		days.push(forecastData.forecast.forecastday[i].hour[17]);
-	}
+  if (forecastData === {}) return;
+  if (!("forecast" in forecastData)) return;
+  if (!("forecastday" in forecastData.forecast)) return;
+  const days = [];
+  days.push(forecastData.current);
+  for (var i = 0; i < 3; i++) {
+    days.push(forecastData.forecast.forecastday[i].hour[5]);
+    days.push(forecastData.forecast.forecastday[i].hour[17]);
+  }
 
-	if (param === 1) {
-		const labels = [];
-		const data = [];
-		labels.push("Today");
-		data.push(days[0].humidity);
-		for (var i = 1; i < 7; i++) {
-			labels.push(new Date(days[i].time).toLocaleString());
-			data.push(days[i].humidity);
-		}
-		return {
-			labels: labels,
-			datasets: [
-				{
-					data: data,
-				},
-			],
-		};
-	} else {
-		const labels = [];
-		const data = [];
-		labels.push("Today");
-		data.push(days[0].temp_c);
-		for (var i = 1; i < 7; i++) {
-			labels.push(new Date(days[i].time).toLocaleString());
-			data.push(days[i].temp_c);
-		}
-		return {
-			labels: labels,
-			datasets: [
-				{
-					data: data,
-				},
-			],
-		};
-	}
+  if (param === 1) {
+    const labels = [];
+    const data = [];
+    labels.push("Today");
+    data.push(days[0].humidity);
+    for (var i = 1; i < 7; i++) {
+      labels.push(new Date(days[i].time).toLocaleString());
+      data.push(days[i].humidity);
+    }
+    return {
+      labels: labels,
+      datasets: [
+        {
+          data: data,
+        },
+      ],
+    };
+  } else {
+    const labels = [];
+    const data = [];
+    labels.push("Today");
+    data.push(days[0].temp_c);
+    for (var i = 1; i < 7; i++) {
+      labels.push(new Date(days[i].time).toLocaleString());
+      data.push(days[i].temp_c);
+    }
+    return {
+      labels: labels,
+      datasets: [
+        {
+          data: data,
+        },
+      ],
+    };
+  }
 }
 
 function checkForAlerts(res) {
-	if (res === {}) return;
-	if (!("alerts" in res)) return;
-	const alerts = res.alerts.alert;
-	if (alerts.length === 0) return;
-	const alertsToDisplay = []
-	alerts.forEach((alert) => {
-		alertsToDisplay.push(
-			<Alert color="danger">
-				<strong>{alert.event}</strong>
-				<em>{alert.headline}</em>
-			</Alert>
-		)
-	})
-	return alertsToDisplay;
+  if (res === {}) return;
+  if (!("alerts" in res)) return;
+  const alerts = res.alerts.alert;
+  if (alerts.length === 0) return;
+  const alertsToDisplay = [];
+  alerts.forEach((alert) => {
+    alertsToDisplay.push(
+      <Alert color="danger">
+        <strong>{alert.event}</strong>
+        <em>{alert.headline}</em>
+      </Alert>
+    );
+  });
+  return alertsToDisplay;
 }
 
 const Index = (props) => {
-	const [activeNav, setActiveNav] = useState(1); // 0 => Rain, 1 => Temp
-	const [forecastData, setForecastData] = useState({});
-	const [graphLoading, setGraphLoading] = useState(true);
-	const [alerts, setAlerts] = useState([])
+  const [activeNav, setActiveNav] = useState(1); // 0 => Rain, 1 => Temp
+  const [forecastData, setForecastData] = useState({});
+  const [graphLoading, setGraphLoading] = useState(true);
+  const [alerts, setAlerts] = useState([]);
 
-	if (window.Chart) {
-		parseOptions(Chart, chartOptions());
-	}
+  if (window.Chart) {
+    parseOptions(Chart, chartOptions());
+  }
 
-	const toggleNavs = (e, index) => {
-		e.preventDefault();
-		setActiveNav(index);
-	};
+  const toggleNavs = (e, index) => {
+    e.preventDefault();
+    setActiveNav(index);
+  };
 
-	const [crop, setCrop] = useState("bajra");
-	const [chartLoading, setChartLoading] = useState(true);
+  const [crop, setCrop] = useState("bajra");
+  const [chartLoading, setChartLoading] = useState(true);
 
-	const [chart2Data, setChart2Data] = useState({
-		labels: ["Nov 2021", "Dec 2021", "Jan 2021", "Feb 2021", "Mar 2021", "Apr 2021"],
-		datasets: [
-			{
-				label: "Sales",
-				data: [0, 0, 0, 0, 0, 0],
-				maxBarThickness: 10,
-			},
-		],
-	});
+  const [chart2Data, setChart2Data] = useState({
+    labels: [
+      "Nov 2021",
+      "Dec 2021",
+      "Jan 2021",
+      "Feb 2021",
+      "Mar 2021",
+      "Apr 2021",
+    ],
+    datasets: [
+      {
+        label: "Sales",
+        data: [0, 0, 0, 0, 0, 0],
+        maxBarThickness: 10,
+      },
+    ],
+  });
 
-	const getPrice = async (date1, index) => {
-		const years = [2009, 2010, 2011, 2012, 2013, 2014];
-		const res = await axios.get(
-			"https://price-predictor-api3.herokuapp.com/?item=" +
-			crop +
-			"&year=" +
-			years[index] +
-			"&month=" +
-			date1.month
-		);
-		return res;
-	};
+  const getPrice = async (date1, index) => {
+    const years = [2009, 2010, 2011, 2012, 2013, 2014];
+    const res = await axios.get(
+      "https://price-predictor-api3.herokuapp.com/?item=" +
+        crop +
+        "&year=" +
+        years[index] +
+        "&month=" +
+        date1.month
+    );
+    return res;
+  };
 
-	const getForecast = async () => {
-		const res = await axios.get(
-			`http://api.weatherapi.com/v1/forecast.json?key=${process.env.REACT_APP_API_KEY}&q=auto:ip&days=4&alerts=yes`
-		);
-		return res;
-	};
+  const getForecast = async () => {
+    const res = await axios.get(
+      `http://api.weatherapi.com/v1/forecast.json?key=${process.env.REACT_APP_API_KEY}&q=auto:ip&days=4&alerts=yes`
+    );
+    return res;
+  };
 
+  useEffect(async () => {
+    setGraphLoading(true);
+    const data = await getForecast();
+    setForecastData(data.data);
+    console.log(data.data);
+    const alerts = checkForAlerts(data.data);
+    setAlerts(alerts);
+    setGraphLoading(false);
+  }, []);
 
+  useEffect(async () => {
+    setChartLoading(true);
+    let dates = [];
+    let labels = [];
 
-	useEffect(async () => {
-		setGraphLoading(true);
-		const data = await getForecast();
-		setForecastData(data.data);
-		console.log(data.data)
-		const alerts = checkForAlerts(data.data);
-		setAlerts(alerts);
-		setGraphLoading(false);
-	}, []);
+    let currYear = new Date().getFullYear();
+    let currMonth = new Date().getMonth() + 1;
 
-	useEffect(async () => {
-		setChartLoading(true);
-		let dates = [];
-		let labels = [];
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
 
-		let currYear = new Date().getFullYear();
-		let currMonth = new Date().getMonth() + 1;
+    for (let i = 0; i < 6; i++) {
+      let dateObj = {};
+      dateObj.year = currYear;
+      dateObj.month = currMonth;
 
-		const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      labels.push(months[currMonth - 1] + " " + currYear);
+      dates.push(dateObj);
 
-		for (let i = 0; i < 6; i++) {
-			let dateObj = {};
-			dateObj.year = currYear;
-			dateObj.month = currMonth;
+      if (currMonth == 12) currYear++;
+      currMonth++;
+      if (currMonth > 12) currMonth = 1;
+    }
 
-			labels.push(months[currMonth - 1] + " " + currYear);
-			dates.push(dateObj);
+    let prices = [];
 
-			if (currMonth == 12) currYear++;
-			currMonth++;
-			if (currMonth > 12) currMonth = 1;
-		}
+    for (let i = 0; i < dates.length; i++) {
+      let date1 = dates[i];
+      let price = await getPrice(date1, i);
+      // console.log(price);
+      prices.push(Math.round(price.data.price * 100) / 100);
+    }
 
-		let prices = [];
+    let newChartData = {
+      labels,
+      datasets: [
+        {
+          label: "Sales",
+          data: [25, 20, 30, 22, 17, 29],
+          maxBarThickness: 10,
+        },
+      ],
+    };
 
-		for (let i = 0; i < dates.length; i++) {
-			let date1 = dates[i];
-			let price = await getPrice(date1, i);
-			// console.log(price);
-			prices.push(Math.round(price.data.price * 100) / 100);
-		}
+    newChartData.datasets[0].data = prices;
+    setChart2Data(newChartData);
+    setChartLoading(false);
+  }, [crop]);
 
-		let newChartData = {
-			labels,
-			datasets: [
-				{
-					label: "Sales",
-					data: [25, 20, 30, 22, 17, 29],
-					maxBarThickness: 10,
-				},
-			],
-		};
-
-		newChartData.datasets[0].data = prices;
-		setChart2Data(newChartData);
-		setChartLoading(false);
-	}, [crop]);
-
-	return (
-		<>
-			<Header />
-			{/* Page content */}
-			<Container className="mt--7" fluid>
-				<Row>
-					<Col className="mb-5 mb-xl-0" xl="8">
-						<Card className="bg-gradient-default shadow">
-							<CardHeader className="bg-transparent">
-								<Row className="align-items-center">
-									<div className="col">
-										<h6 className="text-uppercase text-light ls-1 mb-1">Overview</h6>
-										<h2 className="text-white mb-0">
-											Expected {activeNav === 1 ? "Humidity" : "Temperature"}
-										</h2>
-									</div>
-									<div className="col">
-										<Nav className="justify-content-end" pills>
-											<NavItem>
-												<NavLink
-													className={classnames("py-2 px-3", {
-														active: activeNav === 1,
-													})}
-													href="#pablo"
-													onClick={(e) => toggleNavs(e, 1)}
-												>
-													<span className="d-none d-md-block">Humidity</span>
-													<span className="d-md-none">H</span>
-												</NavLink>
-											</NavItem>
-											<NavItem>
-												<NavLink
-													className={classnames("py-2 px-3", {
-														active: activeNav === 2,
-													})}
-													data-toggle="tab"
-													href="#pablo"
-													onClick={(e) => toggleNavs(e, 2)}
-												>
-													<span className="d-none d-md-block">Temperature</span>
-													<span className="d-md-none">T</span>
-												</NavLink>
-											</NavItem>
-										</Nav>
-									</div>
-								</Row>
-							</CardHeader>
-							<CardBody>
-								{/* Chart */}
-								<div className="chart">
-									{graphLoading && <p>Fetching Location...</p>}
-									{!graphLoading &&
-										<Line
-											data={returnForecast(activeNav, forecastData)}
-											options={activeNav === 1 ? chartExample3.options : chartExample4.options}
-											getDatasetAtEvent={(e) => console.log(e)}
-										/>}
-								</div>
-							</CardBody>
-						</Card>
-					</Col>
-					<Col xl="4">
-						<Card className="shadow">
-							<CardHeader className="bg-transparent">
-								<Row className="align-items-center">
-									<div className="col">
-										<h6 className="text-uppercase text-muted ls-1 mb-1">Profits</h6>
-										<div className="d-flex" style={{ justifyContent: "space-between" }}>
-											<h2 className="mb-0">Predicted Prices</h2>
-											<select
-												name="crops"
-												id="crops"
-												onChange={(e) => {
-													setCrop(e.target.value);
-												}}
-												style={{
-													backgroundColor: "#fff",
-													border: "1px solid #32325d",
-													borderRadius: "5px",
-													padding: "5px",
-													fontWeight: "600",
-													color: "#32325d",
-												}}
-											>
-												<option value="rice">Rice</option>
-												<option value="wheat">Wheat</option>
-												<option value="bajra">Bajra</option>
-												<option value="moong">Moong</option>
-												<option value="jowar">Jowar</option>
-												<option value="urad">Urad</option>
-												<option value="maize">Maize</option>
-											</select>
-										</div>
-									</div>
-								</Row>
-							</CardHeader>
-							<CardBody>
-								{/* Chart */}
-								<div className="chart">
-									{chartLoading && <p>Loading...</p>}
-									{!chartLoading && <Bar data={chart2Data} options={chartExample2.options} />}
-								</div>
-							</CardBody>
-						</Card>
-					</Col>
-				</Row>
-				{alerts && alerts.map((alert, _index) => (
-					{ alert }
-				))}
-				{!chartLoading && <Suggestions data={forecastData} />}
-			</Container>
-		</>
-	);
+  return (
+    <>
+      <Header />
+      {/* Page content */}
+      <Container className="mt--7" fluid>
+        <Row>
+          <Col className="mb-5 mb-xl-0" xl="8">
+            <Card className="bg-gradient-default shadow">
+              <CardHeader className="bg-transparent">
+                <Row className="align-items-center">
+                  <div className="col">
+                    <h6 className="text-uppercase text-light ls-1 mb-1">
+                      Overview
+                    </h6>
+                    <h2 className="text-white mb-0">
+                      Expected {activeNav === 1 ? "Humidity" : "Temperature"}
+                    </h2>
+                  </div>
+                  <div className="col">
+                    <Nav className="justify-content-end" pills>
+                      <NavItem>
+                        <NavLink
+                          className={classnames("py-2 px-3", {
+                            active: activeNav === 1,
+                          })}
+                          href="#pablo"
+                          onClick={(e) => toggleNavs(e, 1)}
+                        >
+                          <span className="d-none d-md-block">Humidity</span>
+                          <span className="d-md-none">H</span>
+                        </NavLink>
+                      </NavItem>
+                      <NavItem>
+                        <NavLink
+                          className={classnames("py-2 px-3", {
+                            active: activeNav === 2,
+                          })}
+                          data-toggle="tab"
+                          href="#pablo"
+                          onClick={(e) => toggleNavs(e, 2)}
+                        >
+                          <span className="d-none d-md-block">Temperature</span>
+                          <span className="d-md-none">T</span>
+                        </NavLink>
+                      </NavItem>
+                    </Nav>
+                  </div>
+                </Row>
+              </CardHeader>
+              <CardBody>
+                {/* Chart */}
+                <div className="chart">
+                  {graphLoading && <p>Fetching Location...</p>}
+                  {!graphLoading && (
+                    <Line
+                      data={returnForecast(activeNav, forecastData)}
+                      options={
+                        activeNav === 1
+                          ? chartExample3.options
+                          : chartExample4.options
+                      }
+                      getDatasetAtEvent={(e) => console.log(e)}
+                    />
+                  )}
+                </div>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col xl="4">
+            <Card className="shadow">
+              <CardHeader className="bg-transparent">
+                <Row className="align-items-center">
+                  <div className="col">
+                    <h6 className="text-uppercase text-muted ls-1 mb-1">
+                      Profits
+                    </h6>
+                    <div
+                      className="d-flex"
+                      style={{ justifyContent: "space-between" }}
+                    >
+                      <h2 className="mb-0">Predicted Prices</h2>
+                      <select
+                        name="crops"
+                        id="crops"
+                        onChange={(e) => {
+                          setCrop(e.target.value);
+                        }}
+                        style={{
+                          backgroundColor: "#fff",
+                          border: "1px solid #32325d",
+                          borderRadius: "5px",
+                          padding: "5px",
+                          fontWeight: "600",
+                          color: "#32325d",
+                        }}
+                      >
+                        <option value="rice">Rice</option>
+                        <option value="wheat">Wheat</option>
+                        <option value="bajra">Bajra</option>
+                        <option value="moong">Moong</option>
+                        <option value="jowar">Jowar</option>
+                        <option value="urad">Urad</option>
+                        <option value="maize">Maize</option>
+                      </select>
+                    </div>
+                  </div>
+                </Row>
+              </CardHeader>
+              <CardBody>
+                {/* Chart */}
+                <div className="chart">
+                  {chartLoading && <p>Loading...</p>}
+                  {!chartLoading && (
+                    <Bar data={chart2Data} options={chartExample2.options} />
+                  )}
+                </div>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+        {alerts && alerts.map((alert, _index) => ({ alert }))}
+        {!chartLoading && <Suggestions data={forecastData} />}
+      </Container>
+    </>
+  );
 };
 
 export default Index;
