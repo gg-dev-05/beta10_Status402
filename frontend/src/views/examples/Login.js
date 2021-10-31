@@ -35,6 +35,7 @@ import {
 import { BASE_URL } from "../../Common/Constants";
 import axios from "axios";
 import { badNotification, goodNotification } from "Common/Notification";
+import { Link } from "react-router-dom";
 
 const Login = ({ refresh }) => {
 	const [username, setUsername] = useState("");
@@ -128,9 +129,9 @@ const Login = ({ refresh }) => {
 									</a>*/}
 					</Col>
 					<Col className="text-right" xs="6">
-						<a className="text-light" href="#pablo" onClick={(e) => e.preventDefault()}>
+						<Link className="text-light" to="/auth/register">
 							<small>Create new account</small>
-						</a>
+						</Link>
 					</Col>
 				</Row>
 			</Col>

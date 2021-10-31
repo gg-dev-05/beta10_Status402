@@ -56,6 +56,8 @@ const Inventory = () => {
     price: 0,
   });
 
+  console.log(items);
+
   //   const handleFilter = (filt) => {
   //     console.log(filt);
   //     setFilter(filt);
@@ -336,7 +338,6 @@ const Inventory = () => {
                         </td>
                         <td>
                           <Badge color="" className="badge-dot mr-4">
-                            <i className="bg-warning" />
                             {editIndex !== item._id ? (
                               <p>{`${item.quantity} ${item.units}`}</p>
                             ) : (

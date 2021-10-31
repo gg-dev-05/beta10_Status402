@@ -39,6 +39,7 @@ import { BASE_URL } from "../../Common/Constants";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { goodNotification, badNotification } from "Common/Notification";
+import { Link } from "react-router-dom";
 
 const Register = () => {
 	let history = useHistory();
@@ -67,7 +68,7 @@ const Register = () => {
 
 	return (
 		<>
-			<Col lg="6" md="8">
+			<Col lg="5" md="7">
 				<Card className="bg-secondary shadow border-0">
 					<CardBody className="px-lg-5 py-lg-5">
 						<div className="text-center text-muted mb-4">
@@ -122,6 +123,14 @@ const Register = () => {
 						</Form>
 					</CardBody>
 				</Card>
+				<Row className="mt-3">
+					<Col xs="6"></Col>
+					<Col className="text-right" xs="6">
+						<Link className="text-light" to="/auth/login">
+							<small>Already have an account? Sign in</small>
+						</Link>
+					</Col>
+				</Row>
 			</Col>
 		</>
 	);

@@ -17,7 +17,6 @@
 */
 import Index from "views/Index.js";
 import Profile from "views/examples/Profile.js";
-import Maps from "views/examples/Maps.js";
 import Register from "views/examples/Register.js";
 import Login from "views/examples/Login.js";
 //import Tables from "views/examples/Tables.js";
@@ -36,22 +35,15 @@ var routes = [
   {
     path: "/orders",
     name: "Orders",
-    icon: "ni ni-planet text-blue",
+    icon: "ni ni-planet text-orange",
     component: Orders,
     layout: "/farmer",
   },
   {
     path: "/inventory",
     name: "Inventory",
-    icon: "ni ni-planet text-blue",
+    icon: "ni ni-box-2 text-green",
     component: Inventory,
-    layout: "/farmer",
-  },
-  {
-    path: "/maps",
-    name: "Maps",
-    icon: "ni ni-pin-3 text-orange",
-    component: Maps,
     layout: "/farmer",
   },
   {
@@ -61,13 +53,6 @@ var routes = [
     component: Profile,
     layout: "/farmer",
   },
-  // {
-  //   path: "/tables",
-  //   name: "Tables",
-  //   icon: "ni ni-bullet-list-67 text-red",
-  //   component: Tables,
-  //   layout: "/farmer",
-  // },
   {
     path: "/logout",
     name: "Logout",

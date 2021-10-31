@@ -384,7 +384,7 @@ let chartExample2 = {
 					ticks: {
 						callback: function (value) {
 							if (!(value % 10)) {
-								return "$" + value;
+								return "₹" + value;
 							}
 						},
 					},
@@ -401,7 +401,7 @@ let chartExample2 = {
 						content += label;
 					}
 					content += yLabel;
-					return content;
+					return "₹" + content;
 				},
 			},
 		},

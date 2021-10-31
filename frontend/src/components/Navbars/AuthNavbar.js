@@ -24,7 +24,7 @@ const AdminNavbar = () => {
 		<>
 			<Navbar className="navbar-top navbar-horizontal navbar-dark" expand="md">
 				<Container className="px-4">
-					<NavbarBrand to="/" tag={Link}>
+					<NavbarBrand to="/auth/login" tag={Link}>
 						<img alt="..." src={require("../../assets/img/brand/argon-react-white.png").default} />
 					</NavbarBrand>
 					<button className="navbar-toggler" id="navbar-collapse-main">
